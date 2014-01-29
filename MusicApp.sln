@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicApp.Web", "MusicApp.Web\Web.csproj", "{018BBC71-FC65-400E-9076-1B7144206FDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicApp.Core", "MusicApp.Core\Core.csproj", "{2568548E-DB00-4261-B5FB-89DCA3D4FDCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicApp.DataAccess", "MusicApp.DataAccess\DataAccess.csproj", "{077EBDB6-A9B6-4A0F-8561-4389AF5F4635}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicApp.Business", "MusicApp.Business\Business.csproj", "{2D3BAB6E-3BAE-45B0-A221-B0812728ADDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{018BBC71-FC65-400E-9076-1B7144206FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{018BBC71-FC65-400E-9076-1B7144206FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{018BBC71-FC65-400E-9076-1B7144206FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{018BBC71-FC65-400E-9076-1B7144206FDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2568548E-DB00-4261-B5FB-89DCA3D4FDCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2568548E-DB00-4261-B5FB-89DCA3D4FDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2568548E-DB00-4261-B5FB-89DCA3D4FDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2568548E-DB00-4261-B5FB-89DCA3D4FDCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{077EBDB6-A9B6-4A0F-8561-4389AF5F4635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{077EBDB6-A9B6-4A0F-8561-4389AF5F4635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{077EBDB6-A9B6-4A0F-8561-4389AF5F4635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{077EBDB6-A9B6-4A0F-8561-4389AF5F4635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D3BAB6E-3BAE-45B0-A221-B0812728ADDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D3BAB6E-3BAE-45B0-A221-B0812728ADDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D3BAB6E-3BAE-45B0-A221-B0812728ADDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D3BAB6E-3BAE-45B0-A221-B0812728ADDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

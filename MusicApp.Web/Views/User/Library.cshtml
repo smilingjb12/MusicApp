@@ -1,0 +1,255 @@
+﻿@{
+    ViewBag.Title = "Library";
+}
+
+<style>
+    .first-row {
+        padding-top: 20px;
+    }
+
+    #browse-btn {
+        margin-right: 10px;
+    }
+
+    #song-edit-modal form {
+        width: 350px;
+        margin: 0 auto;
+    }
+
+    .album-cover {
+        max-width: 170px;
+    }
+
+    .modal-dialog:not(#song-edit-modal) {
+        padding-top: 30px;
+    }
+
+    .artist {
+        font-weight: bold;
+        color: #555;
+    }
+
+    .actions {
+        display: none;
+        transition: opacity 0.07s ease-in-out;
+    }
+
+    .song:hover .actions {
+        display: inline-block;
+        opacity: 1.0;
+    }
+
+    .song:hover .duration {
+        display: none;
+    }
+
+    .duration {
+        color: #777;
+    }
+
+    .file-size:before {
+        content: "(";
+    }
+
+    .file-size:after {
+        content: ")";
+    }
+
+    .play-btn {
+        line-height: 37px;
+        padding-left: 25px;
+    }
+
+    .col-right {
+        line-height: 39px;
+        padding-right: 30px;
+    }
+
+    .song {
+        padding: 5px;
+    }
+
+    .search {
+        margin-bottom: 5px;
+    }
+
+    .search .input-group-btn {
+        padding-left: 2px;
+    }
+</style>
+@Styles.Render("~/bootstrap-tagsinput")
+<link href="~/Content/bootstrap/file-input-wrapper.css" rel="stylesheet" />
+
+<span class="hidden" id="current-user" data-id="@WebSecurity.GetUserId(User.Identity.Name)"></span>
+
+<div class="row first-row">
+    <div class="col-xs-7 col-xs-offset-2">
+        <div class="panel panel-default" data-bind="visible: noSongsPresent">
+            <div class="panel-body text-center">
+                No songs in your library yet
+            </div>
+        </div>
+        <div class="input-group search" data-bind="ifnot: noSongsPresent">
+            <input type="text" class="form-control" placeholder="Search" data-bind="value: filter, valueUpdate: 'afterkeydown'"/>
+            <div class="input-group-btn">
+                <a href="#" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
+                </a>
+            </div>
+        </div>
+        <div class="panel panel-default" data-bind="visible: songs().length != 0 && filteredSongs().length == 0">
+            <div class="panel-body text-center">
+                No matching songs found
+            </div>
+        </div>
+        <ul class="list-group song-list" data-bind="foreach: filteredSongs">
+            <li class="list-group-item song">
+                <div class="row">
+                    <div class="col-xs-1 play-btn">
+                        <a href="#" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-play"></span>
+                        </a>
+                    </div>
+                    <div class="col-xs-8">
+                        <section class="main-info">
+                            <span class="artist" data-bind="text: artistDisplay"></span>&nbsp;&ndash;&nbsp;
+                            <span data-bind="text: titleDisplay"></span>
+                        </section>
+                        <section class="extra-info small">
+                            <span data-bind="text: bitrateDisplay"></span>
+                            <span class="file-size" data-bind="text: fileSizeInMegaBytesDisplay"></span>
+                        </section>
+                    </div>
+                    <div class="col-xs-3 col-right text-right">
+                        <span data-bind="text: durationDisplay" class="small duration"></span>
+                        <section class="actions">
+                            <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Edit"
+                               data-bind="click: $root.editSong">
+                                <span class="glyphicon glyphicon-cog"></span>
+                            </a>
+                            <a class="btn btn-default btn-xs" data-toggle="tooltip" title="Download"
+                               data-bind="click: $root.downloadSong, attr: {href: downloadUrl}">
+                                <span class="glyphicon glyphicon-import"></span>
+                            </a>
+                            <a href="#" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Remove"
+                               data-bind="click: $root.confirmDelete">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </section>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <a href="#" class="btn btn-success btn-block" id="upload-btn" data-toggle="modal" data-target="#upload-modal">
+                    <span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Upload
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="upload-modal" tabindex="-1">
+</div>
+
+<script type="text/template" id="browse-song-template">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center">Song upload</h4>
+            </div>
+            <div class="modal-body">
+                <span id="browse-btn" class="btn btn-primary btn-file">
+                    <span class="glyphicon glyphicon-folder-open"></span>&nbsp;
+                    Browse
+                    <input type="file" data-bind="event: {change: fileSelected}" />
+                </span>
+                <span class="file-name">Choose a track to upload</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="upload-song-template">
+    <div class="progress progress-striped active">
+        <div id="upload-progress" class="progress-bar" role="progressbar" style="width: 0%">
+    </div>
+</script>
+
+<div class="modal fade" id="song-delete-confirmation" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center">Song deletion confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <div>You are about to delete the following song:</div>
+                <h4>"<span data-bind="text: song().titleDisplay"></span>" by
+                    <span data-bind="text: song().artistDisplay"></span>
+                </h4>
+                <div>Are you sure?</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" data-bind="click: $root.deleteSong">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="song-edit-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center">Song edit</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success alert-dismissable fade in">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    Edit song info if you like. Press "Exit" to finish editing
+                </div>
+                <img data-bind="attr: {src: song().albumCoverPicturePath}" alt="Album cover" class="center-block album-cover img-thumbnail" />
+                <form role="form" data-bind="with: song, submit: $root.updateSong">
+                    <div class="form-group">
+                        <label for="song-title">Title</label>
+                        <input id="song-title" type="text" class="form-control" data-bind="value: title" placeholder="Title" />
+                    </div>
+                    <div class="form-group">
+                        <label for="song-artist">Artist</label>
+                        <input id="song-artist" type="text" class="form-control" data-bind="value: artist" placeholder="Artist" />
+                    </div>
+                    <div class="form-group">
+                        <label for="song-album">Album</label>
+                        <input id="song-album" type="text" class="form-control" data-bind="value: album" placeholder="Album" />
+                    </div>
+                    <div class="form-group">
+                        <label for="song-tags">Tags</label>
+                        <input id="song-tags" type="text" class="form-control" data-role="tagsinput"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Exit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/tagsinput")
+    <script src="~/Scripts/mine/song-uploader.js"></script>
+    <script src="~/Scripts/mine/library.js"></script>
+}

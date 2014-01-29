@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Settings";
+}
+@model SocialApp.Models.UserUpdateModel
+
+<style>
+    ul.nav-tabs {
+        margin-bottom: 20px;
+    }
+
+    img.profile {
+        left: 0;
+    }
+</style>
+<link href="~/Content/bootstrap/file-input-wrapper.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#profile" data-toggle="tab">Profile</a>
+            </li>
+            <li>
+                <a href="#general" data-toggle="tab">General</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="profile">
+                <div class="row">
+                    @using (Html.BeginForm("Update", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="col-xs-4">
+                            <p>Current profile picture</p>
+                            <img class="profile" src="@Model.PictureFilePath" />
+                            <span class="btn btn-default btn-file">Change
+                                @Html.TextBoxFor(m => m.Picture, new { type = "file" })
+                            </span>
+                        </div>
+                        <div class="col-xs-7">
+                            <p>Personal info</p>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.FullName, new { placeholder = "Full name", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Country, new { placeholder = "Your country", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.City, new { placeholder = "City you live in", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextAreaFor(m => m.About, 9, 10, new { placeholder = "About yourself...", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane" id="general">
+                General info
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-2"></div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).on('change', '.btn-file :file', function() {
+            showProfilePicturePreview(this.files[0]);
+        });
+
+        function showProfilePicturePreview(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('img.profile').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+}

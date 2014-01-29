@@ -1,0 +1,15 @@
+*.com
+*.class
+*.dll
+*.dll.config
+*.cache
+*.suo
+!/packages/*/lib/*.dll
+!/packages/*/lib/*/*.dll
+!*CommonReferences/*.dll
+bin/
+obj/
+TestResults/
+/_ReSharper.*
+*.ReSharper.*
+/MusicApp.Web/Content/Uploads

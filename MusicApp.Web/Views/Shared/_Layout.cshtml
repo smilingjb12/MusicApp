@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/bootstrap/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse" id="top-bar">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                </ul>
+                @Html.Action("TopBar", "Menu")
+            </div>
+        </div>
+    </div>
+    <div id="wrap">
+        <div class="container">
+            @if (TempData.Keys.Any())
+            {
+                string alertType = TempData.Keys.First();
+                string message = TempData[alertType] as string;
+                <div class="alert alert-dismissable alert-@alertType">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    @message
+                </div>
+            }
+            @RenderBody()
+        </div>
+    </div>
+    <div id="footer">
+        <div class="container">
+            <p class="text-center text-muted">©2013 Lorem ipsum dolor sit amet</p>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Content/bootstrap/js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
