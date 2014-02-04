@@ -65,6 +65,9 @@ namespace SocialApp.App_Start
             kernel.Bind<ITagService>()
                   .To<TagService>();
 
+            kernel.Bind<IUserService>()
+                  .To<UserService>();
+
             kernel.Bind<IEmailSender>()
                   .To<EmailSender>();
         }        

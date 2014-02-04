@@ -30,7 +30,8 @@ namespace Data.Domain
         public string About { get; set; }
         public string PictureFilePath { get; set; }
 
-        public virtual IList<Song> UploadedSongs { get; set; } 
+        public virtual IList<Song> UploadedSongs { get; set; }
+        public virtual Room HostedRoom { get; set; }
 
         [NotMapped]
         public string Login

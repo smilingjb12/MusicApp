@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Data.Domain.Room>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<style>
+    #add-room-btn {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-8 col-xs-offset-1">
+        <a id="add-room-btn" href="@Url.Action("Create", "Room")" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Add new room
+        </a>
+        <ul class="list-group">
+            @foreach (var room in Model)
+            {
+                <li class="list-group-item">
+                    <p>Host: @room.Host.Email</p>
+                    <a href="@Url.Action("Details", new { room.Id })">@room.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-xs-3">
+        Maybe sidebar
+    </div>
+</div>

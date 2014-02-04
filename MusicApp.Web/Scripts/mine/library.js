@@ -92,6 +92,7 @@ function AppModel() {
                     $('#upload-modal').modal('hide');
                     self.resetUploadState();
                     ko.applyBindings(self, $('#upload-modal')[0]);
+                    self.editSong(self.song());
                     $('#song-edit-modal').modal('show');
                 }, 500);
             });
@@ -105,7 +106,7 @@ function AppModel() {
             url: '/song/update',
             data: ko.toJSON(self.song()),
             contentType: 'application/json',
-        })
+        });
     };
     
     self.deleteSong = function() {

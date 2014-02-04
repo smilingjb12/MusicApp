@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using Business.Services;
 using Data;
 using Data.Domain;
 using DataAccess;
@@ -15,10 +16,12 @@ namespace SocialApp.Controllers
     public class UserController : BaseController
     {
         private readonly SocialAppContext db;
+        private readonly IUserService userService;
 
-        public UserController(SocialAppContext db)
+        public UserController(SocialAppContext db, IUserService userService)
         {
             this.db = db;
+            this.userService = userService;
         }
 
         public ActionResult Show(int id)
@@ -58,10 +61,7 @@ namespace SocialApp.Controllers
 
         public JsonCamelCaseResult UploadedSongs()
         {
-            IEnumerable<Song> songs = db.Songs
-                .Include(song => song.Tags)
-                .Where(song => song.UploaderId == CurrentUserId)
-                .ToList();
+            IEnumerable<Song> songs = userService.GetUploadedSongs(CurrentUserId);
             return new JsonCamelCaseResult(songs, JsonRequestBehavior.AllowGet);
 
         }

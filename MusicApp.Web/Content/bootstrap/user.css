@@ -1,6 +1,7 @@
 ﻿body {
     color: #444;
     overflow-y: scroll !important;
+    background: url("/Images/crossword.png");
 }
 
 .jumbotron.welcome {

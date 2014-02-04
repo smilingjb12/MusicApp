@@ -20,5 +20,10 @@ namespace SocialApp.Controllers
             }
             return View();
         }
+
+        public ViewResult Chat()
+        {
+            return View();
+        }
     }
 }

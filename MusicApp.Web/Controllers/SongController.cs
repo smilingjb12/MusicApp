@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using AutoMapper;
 using Business;
 using Business.Services;
 using Data;
@@ -93,26 +94,21 @@ namespace SocialApp.Controllers
                 Directory.CreateDirectory(albumCoverDirectory);
             }
 
-            using (TagLib.File tagFile = TagLib.File.Create(Server.MapPath("~" + path)))
+            IMp3Parser mp3Parser = new Mp3Parser();
+            Id3Info id3Info = mp3Parser.ExtractId3Info(Server.MapPath("~" + path));
+            Mapper.Map(id3Info, song);
+            IPicture albumCover = id3Info.Picture;
+            if (albumCover != null)
             {
-                song.Bitrate = tagFile.Properties.AudioBitrate;
-                song.Duration = tagFile.Properties.Duration;
-                song.Title = tagFile.Tag.Title ?? "Song Title";
-                song.Artist = tagFile.Tag.FirstAlbumArtist ?? tagFile.Tag.FirstArtist ?? "Song Artist";
-                song.Album = tagFile.Tag.Album ?? "Song Album Title";
-                if (tagFile.Tag.Pictures.FirstOrDefault() != null) // has album cover
-                {
-                    IPicture pic = tagFile.Tag.Pictures.First();
-                    string extension = pic.MimeType.Substring(pic.MimeType.LastIndexOf('/') + 1);
-                    string picFileName = string.Format("{0}.{1}", GenerateFileName(), extension);
-                    string picPath = string.Format("{0}{1}", AlbumCoverDirectory, picFileName);
-                    System.IO.File.WriteAllBytes(Server.MapPath("~" + picPath), pic.Data.ToArray());
-                    song.AlbumCoverPicturePath = picPath;
-                }
-                else // use default album cover picture
-                {
-                    song.AlbumCoverPicturePath = WebConfigurationManager.AppSettings["DefaultAlbumCoverPicturePath"];
-                }
+                string extension = albumCover.MimeType.Substring(albumCover.MimeType.LastIndexOf('/') + 1);
+                string picFileName = string.Format("{0}.{1}", GenerateFileName(), extension);
+                string picPath = string.Format("{0}{1}", AlbumCoverDirectory, picFileName);
+                System.IO.File.WriteAllBytes(Server.MapPath("~" + picPath), albumCover.Data.ToArray());
+                song.AlbumCoverPicturePath = picPath;
+            }
+            else
+            {
+                song.AlbumCoverPicturePath = WebConfigurationManager.AppSettings["DefaultAlbumCoverPicturePath"];
             }
 
             db.Songs.Add(song);

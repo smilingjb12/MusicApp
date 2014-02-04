@@ -16,6 +16,7 @@ namespace DataAccess
         public DbSet<User> Users { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Room> Rooms { get; set; }
 
         public SocialAppContext()
         {
@@ -38,6 +39,7 @@ namespace DataAccess
             modelBuilder.Configurations.Add(new UserConfiguration());
             modelBuilder.Configurations.Add(new SongConfiguration());
             modelBuilder.Configurations.Add(new TagConfiguration());
+            modelBuilder.Configurations.Add(new RoomConfiguration());
         }
     }
 }

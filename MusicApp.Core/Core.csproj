@@ -47,7 +47,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Room.cs" />
     <Compile Include="FileUtils.cs" />
+    <Compile Include="Id3Info.cs" />
+    <Compile Include="IMp3Parser.cs" />
+    <Compile Include="Mp3Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\Song.cs" />
