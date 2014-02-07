@@ -10,7 +10,12 @@
         <div class="container">
             <div class="navbar-collapse collapse" id="top-bar">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li>
+                        <a href="@Url.Action("Index", "Home")">
+                            <span class="glyphicon glyphicon-headphones"></span>
+                            &nbsp;Home
+                        </a>
+                    </li>
                 </ul>
                 @Html.Action("TopBar", "Menu")
             </div>

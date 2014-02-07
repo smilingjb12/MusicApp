@@ -9,7 +9,7 @@ namespace Data.Domain
         public Song()
         {
             Likes = 0;
-            Tags = new HashSet<Tag>();
+            Tags = new List<Tag>();
         }
 
         public int Id { get; set; }
@@ -32,8 +32,8 @@ namespace Data.Domain
         public TimeSpan Duration { get; set; }
 
         public int UploaderId { get; set; }
-        public virtual User Uploader { get; set; }
+        public User Uploader { get; set; }
 
-        public virtual ICollection<Tag> Tags { get; set; }
+        public IList<Tag> Tags { get; set; }
     }
 }

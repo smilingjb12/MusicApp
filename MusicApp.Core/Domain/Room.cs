@@ -9,13 +9,20 @@ namespace Data.Domain
 {
     public class Room
     {
+        public Room()
+        {
+            Users = new List<User>();
+        }
+
         public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
-
+        
+        [MaxLength]
         public string Description { get; set; }
 
-        public virtual User Host { get; set; }
+        public User Host { get; set; }
+        public IList<User> Users { get; set; } 
     }
 }

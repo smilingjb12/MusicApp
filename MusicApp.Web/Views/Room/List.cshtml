@@ -8,6 +8,28 @@
     #add-room-btn {
         margin-bottom: 10px;
     }
+
+    .user {
+        width: 100%;
+    }
+
+    .name {
+        margin-top: 10px;
+    }
+
+    .description {
+        margin: 0;
+        overflow: hidden;
+    }
+
+    li.list-group-item {
+        margin-bottom: 5px;
+    }
+    a.join-btn {
+        display: inline-block;
+        float: right;
+        width: 90px;
+    }
 </style>
 
 <div class="row">
@@ -19,8 +41,21 @@
             @foreach (var room in Model)
             {
                 <li class="list-group-item">
-                    <p>Host: @room.Host.Email</p>
-                    <a href="@Url.Action("Details", new { room.Id })">@room.Name</a>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <a href="@Url.Action("Show", "User", new { room.Host.Id })" title="@room.Host.FullName">
+                                <img alt="@room.Host.FullName" class="user img-thumbnail" src="@room.Host.PictureFilePath" alt="@room.Host.FullName's room"/>
+                            </a>
+                        </div>
+                        <div class="col-xs-10">
+                            <h4 class="name">
+                                @room.Name
+                                <a href="@Url.Action("Details", "Room", new{room.Id})" class="btn btn-default btn-sm join-btn">Join</a>
+                            </h4>
+                            <p class="description">@room.Description</p>
+                            <p class="text-muted">Hosted by @room.Host.FullName</p>
+                        </div>
+                    </div>
                 </li>
             }
         </ul>

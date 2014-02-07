@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Data.Domain;
 using DataAccess;
 using System.Data.Entity;
+using SocialApp.Models;
 
 namespace SocialApp.Controllers
 {
@@ -27,6 +28,14 @@ namespace SocialApp.Controllers
 
         public ActionResult Create()
         {
+            User user = db.Users
+                .Include(u => u.HostedRoom)
+                .FirstOrDefault(u => u.Id == CurrentUserId);
+            if (user.HostedRoom != null)
+            {
+                TempData["danger"] = "You must destroy your currently hosted room to create a new one";
+                return RedirectToAction("Details", new { user.HostedRoom.Id });
+            }
             return View();
         }
 
@@ -46,19 +55,15 @@ namespace SocialApp.Controllers
             return RedirectToAction("Details", "Room", new { room.Id });
         }
 
-        public ActionResult Delete(int id)
-        {
-            Room room = db.Rooms.Find(id);
-            db.Rooms.Remove(room);
-            db.SaveChanges();
-
-            return RedirectToAction("List");
-        }
-
         public ViewResult Details(int id)
         {
-            Room room = db.Rooms.Find(id);
-            return View(room);
+            var model = new RoomDetailsViewModel()
+            {
+                Room = db.Rooms.Find(id),
+                CurrentUser = db.Users.Find(CurrentUserId),
+            };
+            model.CurrentUserIsHost = model.Room == model.CurrentUser.HostedRoom;
+            return View(model);
         }
 
     }

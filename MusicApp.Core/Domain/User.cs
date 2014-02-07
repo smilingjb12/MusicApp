@@ -29,9 +29,10 @@ namespace Data.Domain
         public string City { get; set; }
         public string About { get; set; }
         public string PictureFilePath { get; set; }
+        public string ConnectionId { get; set; }
 
-        public virtual IList<Song> UploadedSongs { get; set; }
-        public virtual Room HostedRoom { get; set; }
+        public IList<Song> UploadedSongs { get; set; }
+        public Room HostedRoom { get; set; }
 
         [NotMapped]
         public string Login

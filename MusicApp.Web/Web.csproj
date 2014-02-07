@@ -220,11 +220,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Hubs\MusicRoomHub.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\EmailSender.cs" />
     <Compile Include="Models\IEmailSender.cs" />
     <Compile Include="Models\JsonCamelCaseResult.cs" />
+    <Compile Include="Models\RoomDetailsViewModel.cs" />
     <Compile Include="Models\UserUpdateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strings.Designer.cs">
@@ -249,6 +250,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\default-album-cover.gif" />
     <Content Include="Content\images\default-profile-picture-b&amp;w.png" />
+    <Content Include="Content\images\default_profile_2.png" />
     <Content Include="Content\signup.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -337,6 +339,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\knockout-mapping.js" />
     <Content Include="Scripts\mine\library.js" />
+    <Content Include="Scripts\mine\music-chat.js" />
     <Content Include="Scripts\mine\song-uploader.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Web.config">

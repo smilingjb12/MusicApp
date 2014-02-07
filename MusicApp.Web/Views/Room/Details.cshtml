@@ -1,7 +1,163 @@
 ﻿@{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Room.Name;
 }
 
-@model Data.Domain.Room
+@model SocialApp.Models.RoomDetailsViewModel
 
-<h2>Room#Details</h2>
+<style>
+    input.message-input {
+        margin-top: 5px;
+        outline: none;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        height: 42px;
+    }
+
+    ul#chat {
+        overflow-y: scroll;
+        height: 250px;
+        background-color: #fff;
+        border: solid 1px #ddd;
+        border-radius: 4px;
+    }
+
+        ul#chat li {
+            padding: 0 2px;
+        }
+
+            ul#chat li .username {
+                font-weight: bold;
+            }
+
+            ul#chat li .info {
+                color: #666;
+            }
+
+                ul#chat li .info.left {
+                    color: #ed9c28 !important;
+                }
+
+                ul#chat li .info.joined {
+                    color: #428bca !important;
+                }
+
+
+        #users .avatar {
+            width: 51px;
+            height: 51px;
+            display: inline-block;
+            background: #eee;
+            float: left;
+            margin: 2px;
+        }
+
+        #users .panel-body {
+            overflow-y: scroll;
+            height: 157px;
+        }
+
+    #message-text {
+        margin-bottom: 20px;
+    }
+
+    #avatars {
+        padding: 0;
+    }
+
+    .room-title {
+        margin-bottom: 10px;
+        box-shadow: none;
+        font-size: 16px;
+        color: #777;
+    }
+    
+    #playlist .panel-body {
+        height: 230px;
+        overflow-y: scroll;
+    }
+
+    .right-column {
+        margin-left: 1%;
+    }
+
+    #actions .btn {
+        width: 100px;
+    }
+
+    #del-room-modal {
+        margin-top: 90px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-4 col-xs-offset-1">
+        <div class="panel panel-default" id="users">
+            <div class="panel-heading">
+                People in this room
+            </div>
+            <div class="panel-body" id="avatars">
+                <div class="avatar"></div>
+            </div>
+            <div class="panel-footer">
+                Room: @Model.Room.Name
+            </div>
+        </div>
+
+        <ul id="chat" class="list-unstyled">
+        </ul>
+
+        <input type="text" id="message-text" class="message-input form-control" placeholder="Type your message here" />
+    </div>
+    <div class="col-xs-5 right-column">
+        <div class="panel panel-default" id="playlist">
+            <div class="panel-heading">Now playing</div>
+            <div class="panel-body">
+                Playlist here
+            </div>
+        </div>
+        <div class="panel panel-default" id="actions">
+            <div class="panel-heading">Actions</div>
+            <div class="panel-body">
+                <a href="#" class="btn btn-default btn-sm">Vote skip song</a>
+                <a href="#" class="btn btn-primary btn-sm">Add song</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="avatar-tmpl">
+    <img class="avatar img-thumbnail" 
+         data-toggle="tooltip" data-placement="bottom" title="" src="" />
+</script>
+
+<script type="text/template" id="chat-msg-tmpl">
+    <li>
+        <span class="timestamp"></span>
+        <span class="info">
+            <span class="username"></span>:
+            <span class="message"></span>
+        </span>
+    </li>    
+</script>
+
+<script type="text/template" id="chat-event-tmpl">
+    <li class="event">
+        <span class="timestamp"></span>
+        <span class="info">
+            <span class="username"></span>
+            <span class="text"></span>
+        </span>
+    </li>    
+</script>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.signalR-2.0.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var roomId = parseInt(@Model.Room.Id);
+        var userId = parseInt(@Model.CurrentUser.Id);
+        var isHost = '@Model.CurrentUserIsHost' == 'True';
+    </script>
+    <script src="~/Scripts/mine/music-chat.js"></script>
+}

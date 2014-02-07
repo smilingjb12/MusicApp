@@ -18,6 +18,8 @@ namespace SocialApp.Controllers
     [Authorize]
     public class AccountController : BaseController
     {
+        public const string DefaultProfilePicturePath = "/Content/images/default_profile_2.png";
+
         private readonly SocialAppContext db;
         private readonly IEmailSender emailSender;
 
