@@ -28,14 +28,6 @@ namespace SocialApp.Controllers
 
         public ActionResult Create()
         {
-            User user = db.Users
-                .Include(u => u.HostedRoom)
-                .FirstOrDefault(u => u.Id == CurrentUserId);
-            if (user.HostedRoom != null)
-            {
-                TempData["danger"] = "You must destroy your currently hosted room to create a new one";
-                return RedirectToAction("Details", new { user.HostedRoom.Id });
-            }
             return View();
         }
 
@@ -55,15 +47,26 @@ namespace SocialApp.Controllers
             return RedirectToAction("Details", "Room", new { room.Id });
         }
 
-        public ViewResult Details(int id)
+        public ActionResult Details(int id)
         {
+            Room room = db.Rooms.Find(id);
+            if (room == null)
+            {
+                return RedirectToAction("List");
+            }
             var model = new RoomDetailsViewModel()
             {
-                Room = db.Rooms.Find(id),
+                Room = room,
                 CurrentUser = db.Users.Find(CurrentUserId),
             };
             model.CurrentUserIsHost = model.Room == model.CurrentUser.HostedRoom;
             return View(model);
+        }
+
+        public RedirectToRouteResult Destroyed(int id)
+        {
+            TempData["danger"] = "Room has been destroyed by its host";
+            return RedirectToAction("List");
         }
 
     }

@@ -42,12 +42,22 @@ namespace SocialApp.Hubs
             Room room = db.Rooms
                 .Include(r => r.Users)
                 .FirstOrDefault(r => r.Users.Any(u => u.Id == user.Id));
-            room.Users.Remove(user);
+            if (user.HostedRoom == room) // leaving user is the host
+            {
+                Clients.Group(room.Id.ToString()).onRoomDestroyed();
+                user.HostedRoom = null;
+                room.Users.Clear();
+                db.Rooms.Remove(room);
+            }
+            else
+            {
+                room.Users.Remove(user);
+                Clients.Group(room.Id.ToString()).onUserLeft(new { username = user.FullName });
+                Groups.Remove(user.ConnectionId, room.Id.ToString());
+                user.ConnectionId = null;
+                SendUserListForRoom(room);
+            }
             db.SaveChanges();
-            Clients.Group(room.Id.ToString()).onUserLeft(new { username = user.FullName });
-            Groups.Remove(user.ConnectionId, room.Id.ToString());
-            user.ConnectionId = null;
-            SendUserListForRoom(room);
             return base.OnDisconnected();
         }
 

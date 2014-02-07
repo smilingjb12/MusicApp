@@ -88,6 +88,10 @@ hub.client.onUserListReceived = function(users) {
     });
 };
 
+hub.client.onRoomDestroyed = function() {
+    window.location = '/room/destroyed/' + roomId;
+};
+
 $.connection.hub.start().done(function() {
     hub.server.joinRoom(userId, roomId).fail(function(e) {
         console.error(e);
@@ -109,6 +113,11 @@ $.connection.hub.start().done(function() {
     if (isHost) {
         $(window).on('beforeunload', function() {
             return 'If you leave this page your room will be destroyed';
-        })
+        });
+        $(window).unload(function() {
+            hub.server.destroyRoom(roomId).fail(function(e) {
+                console.error(e);
+            });
+        });
     }
 });
