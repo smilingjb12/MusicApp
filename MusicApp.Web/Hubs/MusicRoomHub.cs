@@ -30,6 +30,15 @@ namespace SocialApp.Hubs
             SendUserListForRoom(room);
         }
 
+        public void AddSongToPlaylist(int songId, int roomId)
+        {
+            Song song = db.Songs.Find(songId);
+            Room room = db.Rooms.Include(r => r.PlaylistSongs)
+                .FirstOrDefault(r => r.Id == roomId);
+            room.PlaylistSongs.Add(song);
+            Clients.Group(roomId.ToString()).onPlaylistReceived(room.PlaylistSongs);
+        }
+
         public void SendMessage(int userId, int roomId, string message)
         {
             User user = db.Users.Find(userId);

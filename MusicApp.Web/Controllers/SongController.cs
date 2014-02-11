@@ -50,6 +50,12 @@ namespace SocialApp.Controllers
             return Json(string.Empty);
         }
 
+        public JsonCamelCaseResult Search(string term)
+        {
+            var songs = db.Songs.Where(s => s.Artist.ContainsIgnoreCase(term) || s.Title.ContainsIgnoreCase(term));
+            return new JsonCamelCaseResult(songs, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult Delete(int id)
         {

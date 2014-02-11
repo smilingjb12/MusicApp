@@ -12,6 +12,7 @@ namespace Data.Domain
         public Room()
         {
             Users = new List<User>();
+            PlaylistSongs = new List<Song>();
         }
 
         public int Id { get; set; }
@@ -19,10 +20,11 @@ namespace Data.Domain
         [Required]
         public string Name { get; set; }
         
-        [MaxLength]
+        [MaxLength(40)]
         public string Description { get; set; }
 
         public User Host { get; set; }
-        public IList<User> Users { get; set; } 
+        public IList<User> Users { get; set; }
+        public IList<Song> PlaylistSongs { get; set; } 
     }
 }

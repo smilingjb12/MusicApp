@@ -42,19 +42,19 @@
                 }
 
 
-        #users .avatar {
-            width: 51px;
-            height: 51px;
-            display: inline-block;
-            background: #eee;
-            float: left;
-            margin: 2px;
-        }
+    #users .avatar {
+        width: 51px;
+        height: 51px;
+        display: inline-block;
+        background: #eee;
+        float: left;
+        margin: 2px;
+    }
 
-        #users .panel-body {
-            overflow-y: scroll;
-            height: 157px;
-        }
+    #users .panel-body {
+        overflow-y: scroll;
+        height: 157px;
+    }
 
     #message-text {
         margin-bottom: 20px;
@@ -70,10 +70,18 @@
         font-size: 16px;
         color: #777;
     }
-    
+
     #playlist .panel-body {
-        height: 230px;
+        height: 275px;
         overflow-y: scroll;
+    }
+
+    #playlist #player {
+        margin-top: 15px;
+    }
+
+    #playlist #album-cover {
+        width: 200px;
     }
 
     .right-column {
@@ -87,19 +95,48 @@
     #del-room-modal {
         margin-top: 90px;
     }
-</style>
 
+    table.search-result tr td {
+        width: 10%;
+        vertical-align: middle;
+    }
+    table.search-result tr td + td {
+        width: 70%;
+    }
+
+        table.search-result tr td + td + td {
+            width: 20%;
+        }
+
+    table.search-result {
+        margin-bottom: 0;
+    }
+
+    #add-song-modal {
+        margin-top: 70px;
+    }
+
+        #add-song-modal .modal-footer {
+            margin-top: 0;
+        }
+
+        #add-song-modal .scroll-area {
+            height: 250px;
+            overflow-y: scroll;
+        }
+
+        img.album-cover-sm {
+            width: 50px;
+        }
+</style>
 <div class="row">
     <div class="col-xs-4 col-xs-offset-1">
         <div class="panel panel-default" id="users">
             <div class="panel-heading">
-                People in this room
+                Room: @Model.Room.Name
             </div>
             <div class="panel-body" id="avatars">
                 <div class="avatar"></div>
-            </div>
-            <div class="panel-footer">
-                Room: @Model.Room.Name
             </div>
         </div>
 
@@ -112,14 +149,18 @@
         <div class="panel panel-default" id="playlist">
             <div class="panel-heading">Now playing</div>
             <div class="panel-body">
-                Playlist here
+                <img id="album-cover" src="~/Content/images/default-album-cover.gif" class="img-thumbnail center-block" />
+                <audio controls id="player" class="center-block">
+                    <source id="mp3-source" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
             </div>
         </div>
         <div class="panel panel-default" id="actions">
             <div class="panel-heading">Actions</div>
             <div class="panel-body">
                 <a href="#" class="btn btn-default btn-sm">Vote skip song</a>
-                <a href="#" class="btn btn-primary btn-sm">Add song</a>
+                <a href="#" class="btn btn-primary btn-sm" id="add-song-btn">Add song</a>
             </div>
         </div>
     </div>
@@ -150,6 +191,58 @@
     </li>    
 </script>
 
+<script type="text/template" id="song-search-result-tmpl">
+    {{#songs}}
+        <tr>
+            <td>{{artist}} &ndash; {{title}}</td>
+            <td>
+                <a href="#" class="btn btn-primary btn-block btn-sm">Add</a>
+            </td>
+        </tr>
+    {{/songs}}
+</script>
+
+<div class="modal fade" id="add-song-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add song</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input autofocus id="song-search" class="form-control" type="text" placeholder="Input song title or artist..."
+                               data-bind="event: {keyup: search}, value: searchString, valueUpdate: 'afterkeydown'" />
+                    </div>
+                    <div class="scroll-area">
+                        <table class="table table-striped search-result table-bordered table-hover table-condensed">
+                            <tbody id="search-content" data-bind="foreach: searchedSongs">
+                                <tr>
+                                    <td>
+                                        <img data-bind="attr: {src: albumCoverPicturePath}" class="img-thumbnail album-cover-sm" />
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: artistDisplay"></span>
+                                        &ndash;
+                                        <span data-bind="text: titleDisplay"></span>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-block btn-sm">Add</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts
 {
     <script src="~/Scripts/jquery.signalR-2.0.2.min.js"></script>
@@ -160,4 +253,42 @@
         var isHost = '@Model.CurrentUserIsHost' == 'True';
     </script>
     <script src="~/Scripts/mine/music-chat.js"></script>
+    @Scripts.Render("~/bundles/knockout")
+    <script src="~/Scripts/mine/song-viewmodel.js"></script>
+    <script>
+        function AppViewModel() {
+            var self = this;
+            
+            self.playlist = ko.observableArray([]);
+            self.searchString = ko.observable('');
+            self.searchedSongs = ko.observableArray([]);
+            window.songs = self.searchedSongs; // TODO: REMOVE THIS
+            
+            self.search = function() {
+                console.log('searching for', self.searchString());
+                self.searchString(self.searchString().trim());
+                if (self.searchString().length == 0) return true;
+                $.getJSON('/song/search?term=' + self.searchString()).done(function(songs) {
+                    self.searchedSongs.removeAll();
+                    ko.utils.arrayForEach(songs, function(song) {
+                        self.searchedSongs.push(new SongViewModel(song));
+                    });
+                }).fail(function(e) {
+                    console.error(e);
+                });
+                return true;
+            };
+
+            self.initialize = function() {
+                $('#add-song-btn').click(function() {
+                    $('#add-song-modal').modal('show');
+                });
+            };
+            
+            self.initialize();
+        }
+    
+        ko.applyBindings(new AppViewModel());
+
+    </script>
 }

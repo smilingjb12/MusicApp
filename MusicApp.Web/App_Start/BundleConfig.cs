@@ -59,6 +59,11 @@ namespace SocialApp.App_Start
                 "~/Content/bootstrap/user.css"));
             bundles.Add(new StyleBundle("~/bootstrap-tagsinput").Include(
                 "~/Content/bootstrap/bootstrap-tagsinput.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jplayer").Include(
+                "~/Scripts/jquery.jplayer.min.js",
+                "~/Scripts/jplayer.playlist.min.js",
+                "~/Scripts/jquery.jplayer.inspector.js"));
         }
     }
 }

@@ -321,12 +321,16 @@
     <Content Include="Scripts\bootstrap-tagsinput.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jplayer.playlist.min.js" />
+    <Content Include="Scripts\Jplayer.swf" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.jplayer.inspector.js" />
+    <Content Include="Scripts\jquery.jplayer.min.js" />
     <Content Include="Scripts\jquery.signalR-2.0.2.js" />
     <Content Include="Scripts\jquery.signalR-2.0.2.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -341,7 +345,10 @@
     <Content Include="Scripts\mine\library.js" />
     <Content Include="Scripts\mine\music-chat.js" />
     <Content Include="Scripts\mine\song-uploader.js" />
+    <Content Include="Scripts\mine\song-viewmodel.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\mustache.js" />
+    <Content Include="Scripts\popcorn.jplayer.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -384,6 +391,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\jplayer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

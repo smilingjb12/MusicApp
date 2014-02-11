@@ -13,6 +13,7 @@ namespace DataAccess.Configuration
         public RoomConfiguration()
         {
             HasRequired(r => r.Host).WithOptional(u => u.HostedRoom);
+            HasMany(r => r.PlaylistSongs).WithOptional();
         }
     }
 }
