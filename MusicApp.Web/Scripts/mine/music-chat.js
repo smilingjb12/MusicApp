@@ -12,97 +12,62 @@ utils.generateTimestamp = function() {
 
 var chat = {};
 chat.addMessage = function(params) {
-    console.log('chat.addMessage()');
     var type = params.type;
     var data = params.data;
-    console.log('type:', type);
-    console.log('data:', data);
-
-    // TODO: use template engine
-    if (type == 'user.joined') { 
-        var message = $($('#chat-event-tmpl').html());
-        message.find('.username')
-            .text(data.username)
-            .end()
-            .find('.text')
-            .text(' joined the room')
-            .end()
-            .find('.timestamp')
-            .text(utils.generateTimestamp())
-            .end()
-            .find('.info')
-            .addClass('joined');
-                
+    data = $.extend(data, { timestamp: utils.generateTimestamp() });
+    var messageTmpl = $('#chat-msg-tmpl').html();
+    
+    if (type == 'user.joined') {
+        $.extend(data, { text: ' joined the room', type: 'joined'});
     } else if (type == 'user.message') {
-        var message = $($('#chat-msg-tmpl').html());
-        message.find('.timestamp')
-            .text(utils.generateTimestamp())
-            .end()
-            .find('.username')
-            .text(data.username)
-            .end()
-            .find('.message')
-            .text(data.text);
+        $.extend(data, { type: 'message' });
     } else if (type == 'user.left') {
-        var message = $($('#chat-event-tmpl').html());
-        message.find('.username')
-            .text(data.username)
-            .end()
-            .find('.text')
-            .text(' left the room')
-            .end()
-            .find('.timestamp')
-            .text(utils.generateTimestamp())
-            .end()
-            .find('.info')
-            .addClass('left');
+        $.extend(data, { text: ' left the room', type: 'left' });
     }
-    $('#chat').append(message)
+    var rendered = Mustache.render(messageTmpl, data);
+    $('#chat').append(rendered)
         .scrollTop($('#chat')[0].scrollHeight);
 };
 
-var hub = $.connection.musicRoomHub;
-
-hub.client.onUserJoined = function(user) {
-    console.log('user joined:', user);
-    chat.addMessage({ type: 'user.joined', data: user });
-};
-        
-hub.client.onMessageReceived = function(message) {
-    console.log('message received:', arguments);
-    chat.addMessage({ type: 'user.message', data: message });
-};
-        
-hub.client.onUserLeft = function(user) {
-    chat.addMessage({ type: 'user.left', data: user });
-};
-        
-hub.client.onUserListReceived = function(users) {
-    console.log('received user list:', users);
-    var avatars = $('#avatars');
-    avatars.empty();
-    users.forEach(function(user) {
-        var avatar = $($('#avatar-tmpl').html());
-        avatar.attr({ title: user.username, src: user.picture });
-        avatars.append(avatar);
-    });
-};
-
-hub.client.onRoomDestroyed = function() {
-    window.location = '/room/destroyed/' + roomId;
-};
-
-hub.client.onPlaylistReceived = function() {
-    // TODO: implement
-}
+$.extend($.connection.musicRoomHub.client, {
+    onUserJoined: function(user) {
+        console.log('user joined:', user);
+        chat.addMessage({ type: 'user.joined', data: user });
+    },
+    
+    onMessageReceived: function(message) {
+        console.log('message received:', arguments);
+        chat.addMessage({ type: 'user.message', data: message });
+    },
+    
+    onUserLeft: function(user) {
+        chat.addMessage({ type: 'user.left', data: user });
+    },
+    
+    onUserListReceived: function(users) {
+        console.log('received user list:', users);
+        var tmpl = $('#avatars-tmpl').html();
+        var rendered = Mustache.render(tmpl, { avatars: users });
+        $('#avatars').html(rendered);
+    },
+    
+    onRoomDestroyed: function() {
+        window.location = '/room/destroyed/' + roomId;
+    },
+    
+    onPlaylistReceived: function(playlist) {
+        console.log('received playlist: ', playlist);
+    }
+});
 
 $.connection.hub.start().done(function() {
+    var hub = $.connection.musicRoomHub;
     hub.server.joinRoom(userId, roomId).fail(function(e) {
         console.error(e);
     });
             
     $('#message-text').keypress(function(e) {
-        if (e.which != 13) return;
+        if (e.which != 13) return; // if not ENTER
         var text = $(this).val();
         $(this).val('');
         hub.server.sendMessage(userId, roomId, text).fail(function(e) {

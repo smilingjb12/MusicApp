@@ -54,7 +54,7 @@ namespace SocialApp.Controllers
             {
                 return RedirectToAction("List");
             }
-            var model = new RoomDetailsViewModel()
+            var model = new RoomDetailsViewModel
             {
                 Room = room,
                 CurrentUser = db.Users.Find(CurrentUserId),

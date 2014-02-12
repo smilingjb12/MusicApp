@@ -52,7 +52,8 @@ namespace SocialApp.Controllers
 
         public JsonCamelCaseResult Search(string term)
         {
-            var songs = db.Songs.Where(s => s.Artist.ContainsIgnoreCase(term) || s.Title.ContainsIgnoreCase(term));
+            term = term.ToLower();
+            var songs = db.Songs.Where(s => s.Artist.ToLower().Contains(term) || s.Title.ToLower().Contains(term));
             return new JsonCamelCaseResult(songs, JsonRequestBehavior.AllowGet);
         }
 

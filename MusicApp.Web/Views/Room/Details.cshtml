@@ -29,15 +29,15 @@
                 font-weight: bold;
             }
 
-            ul#chat li .info {
+            ul#chat li .info-message {
                 color: #666;
             }
 
-                ul#chat li .info.left {
+                ul#chat li .info-left {
                     color: #d9534f !important;
                 }
 
-                ul#chat li .info.joined {
+                ul#chat li .info-joined {
                     color: #428bca !important;
                 }
 
@@ -166,40 +166,22 @@
     </div>
 </div>
 
-<script type="text/template" id="avatar-tmpl">
-    <img class="avatar img-thumbnail" 
-         data-toggle="tooltip" data-placement="bottom" title="" src="" />
+<script type="text/template" id="avatars-tmpl">
+    {{#avatars}}
+        <img class="avatar img-thumbnail" 
+             data-toggle="tooltip" data-placement="bottom" 
+             title="{{username}}" src="{{picture}}" />
+    {{/avatars}}
 </script>
 
 <script type="text/template" id="chat-msg-tmpl">
     <li>
-        <span class="timestamp"></span>
-        <span class="info">
-            <span class="username"></span>:
-            <span class="message"></span>
+        <span class="timestamp">{{timestamp}}</span>
+        <span class="info-{{type}}">
+            <span class="username">{{username}}</span>:
+            <span class="message">{{text}}</span>
         </span>
     </li>    
-</script>
-
-<script type="text/template" id="chat-event-tmpl">
-    <li class="event">
-        <span class="timestamp"></span>
-        <span class="info">
-            <span class="username"></span>
-            <span class="text"></span>
-        </span>
-    </li>    
-</script>
-
-<script type="text/template" id="song-search-result-tmpl">
-    {{#songs}}
-        <tr>
-            <td>{{artist}} &ndash; {{title}}</td>
-            <td>
-                <a href="#" class="btn btn-primary btn-block btn-sm">Add</a>
-            </td>
-        </tr>
-    {{/songs}}
 </script>
 
 <div class="modal fade" id="add-song-modal">
@@ -228,7 +210,7 @@
                                         <span data-bind="text: titleDisplay"></span>
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-primary btn-block btn-sm">Add</a>
+                                        <a href="#" class="btn btn-primary btn-block btn-sm" data-bind="click: $root.addSongToPlaylist">Add</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -247,6 +229,7 @@
 {
     <script src="~/Scripts/jquery.signalR-2.0.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/mustache.js"></script>
     <script>
         var roomId = parseInt(@Model.Room.Id);
         var userId = parseInt(@Model.CurrentUser.Id);
@@ -257,6 +240,7 @@
     <script src="~/Scripts/mine/song-viewmodel.js"></script>
     <script>
         function AppViewModel() {
+            var hub = $.connection.musicRoomHub;
             var self = this;
             
             self.playlist = ko.observableArray([]);
@@ -264,6 +248,13 @@
             self.searchedSongs = ko.observableArray([]);
             window.songs = self.searchedSongs; // TODO: REMOVE THIS
             
+            self.addSongToPlaylist = function(song) {
+                console.log('adding song to playlist:', song.id());
+                hub.server.addSongToPlaylist(song.id(), roomId).fail(function(e) {
+                    console.error(e);
+                });
+            };
+
             self.search = function() {
                 console.log('searching for', self.searchString());
                 self.searchString(self.searchString().trim());
