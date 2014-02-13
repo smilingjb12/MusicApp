@@ -8,12 +8,11 @@ using Data.Domain;
 
 namespace DataAccess.Configuration
 {
-    class RoomConfiguration : EntityTypeConfiguration<Room>
+    public class PlaylistSongConfiguration : EntityTypeConfiguration<PlaylistSong>
     {
-        public RoomConfiguration()
+        public PlaylistSongConfiguration()
         {
-            HasRequired(r => r.Host).WithOptional(u => u.HostedRoom);
-            HasMany(r => r.PlaylistSongs).WithRequired(ps => ps.Room);
+            HasRequired(ps => ps.Song).WithMany();
         }
     }
 }
