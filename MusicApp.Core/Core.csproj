@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Domain\PlaylistSong.cs" />
     <Compile Include="Domain\Room.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="FileUtils.cs" />
     <Compile Include="Id3Info.cs" />
     <Compile Include="IMp3Parser.cs" />

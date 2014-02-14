@@ -4,143 +4,8 @@
 
 @model SocialApp.Models.RoomDetailsViewModel
 
-<style>
-    input.message-input {
-        outline: none;
-        box-shadow: none !important;
-        border: 1px solid #ddd !important;
-    }
+<link href="~/Content/room-details.css" rel="stylesheet" />
 
-    ul#chat {
-        overflow-y: scroll;
-        height: 250px;
-        background-color: #fff;
-        border: solid 1px #ddd;
-        border-radius: 4px;
-    }
-
-        ul#chat li {
-            padding: 0 2px;
-        }
-
-            ul#chat li .username {
-                font-weight: bold;
-            }
-
-            ul#chat li .info-message {
-                color: #666;
-            }
-
-            ul#chat li .info-left {
-                color: #d9534f !important;
-            }
-
-            ul#chat li .info-joined {
-                color: #428bca !important;
-            }
-
-
-    #users .avatar {
-        width: 51px;
-        height: 51px;
-        display: inline-block;
-        float: left;
-        margin: 2px;
-    }
-
-    #users .panel-body {
-        overflow-y: scroll;
-        height: 157px;
-    }
-
-    #avatars {
-        padding: 0;
-    }
-
-    .room-title {
-        margin-bottom: 10px;
-        box-shadow: none;
-        font-size: 16px;
-        color: #777;
-    }
-
-    #player-panel #player {
-        margin-top: 15px;
-        width: 260px;
-    }
-
-    #player-panel #album-cover {
-        width: 160px;
-    }
-
-    #actions .btn {
-        width: 100px;
-    }
-
-    #del-room-modal {
-        margin-top: 90px;
-    }
-
-    table.search-result tr td {
-        width: 10%;
-        vertical-align: middle;
-    }
-
-        table.search-result tr td + td {
-            width: 70%;
-        }
-
-            table.search-result tr td + td + td {
-                width: 20%;
-            }
-
-    table.search-result {
-        margin-bottom: 0;
-    }
-
-    #add-song-modal {
-        left: -318px;
-    }
-
-    #add-song-modal .modal-content {
-        width: 610px;
-    }
-
-        #add-song-modal .modal-footer {
-            margin-top: 0;
-        }
-
-        #add-song-modal .scroll-area {
-            height: 250px;
-            overflow-y: scroll;
-        }
-
-    .modal-backdrop {
-        opacity: 0 !important;
-    }
-
-    img.album-cover-sm {
-        width: 50px;
-    }
-
-    .input-group {
-        margin-bottom: 20px;
-    }
-
-    #playlist .panel-body {
-        height: 235px;
-        overflow-y: scroll;
-        padding: 1px;
-    }
-
-    table.tracklist td {
-        vertical-align: middle !important;
-    }
-
-        table.tracklist td:first-child {
-            width: 20%;
-        }
-</style>
 <div class="row">
     <div class="col-xs-4">
         <div class="panel panel-default" id="users">
@@ -191,12 +56,12 @@
                     <tbody data-bind="foreach: playlist">
                         <tr>
                             <td>
-                                <img data-bind="attr: {src: albumCoverPicturePath}" class="img-thumbnail album-cover-sm" />
+                                <img data-bind="attr: {src: AlbumCoverPicturePath}" class="img-thumbnail album-cover-sm" />
                             </td>
                             <td>
-                                <span data-bind="text: titleDisplay"></span>
+                                <span data-bind="text: TitleDisplay"></span>
                                 <br />
-                                <span data-bind="text: artistDisplay" class="text-muted"></span>
+                                <span data-bind="text: ArtistDisplay" class="text-muted"></span>
                             </td>
                         </tr>
                     </tbody>
@@ -250,12 +115,12 @@
                             <tbody id="search-content" data-bind="foreach: searchedSongs">
                                 <tr>
                                     <td>
-                                        <img data-bind="attr: {src: albumCoverPicturePath}" class="img-thumbnail album-cover-sm" />
+                                        <img data-bind="attr: {src: AlbumCoverPicturePath}" class="img-thumbnail album-cover-sm" />
                                     </td>
                                     <td>
-                                        <span data-bind="text: artistDisplay"></span>
+                                        <span data-bind="text: ArtistDisplay"></span>
                                         &ndash;
-                                        <span data-bind="text: titleDisplay"></span>
+                                        <span data-bind="text: TitleDisplay"></span>
                                     </td>
                                     <td>
                                         <a href="#" class="btn btn-primary btn-block btn-sm" data-bind="click: $root.addSongToPlaylist">Add</a>
@@ -287,6 +152,7 @@
         var roomId = parseInt(@Model.Room.Id);
         var userId = parseInt(@Model.CurrentUser.Id);
         var currentUserIsHost = '@Model.CurrentUserIsHost' == 'True';
+        var currentUserName = '@Model.CurrentUser.FullName';
     </script>
     @Scripts.Render("~/bundles/knockout")
     <script src="~/Scripts/mine/song-viewmodel.js"></script>

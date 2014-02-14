@@ -112,23 +112,23 @@
                     </div>
                     <div class="col-xs-8">
                         <section class="main-info">
-                            <span class="artist" data-bind="text: artistDisplay"></span>&nbsp;&ndash;&nbsp;
-                            <span data-bind="text: titleDisplay"></span>
+                            <span class="artist" data-bind="text: ArtistDisplay"></span>&nbsp;&ndash;&nbsp;
+                            <span data-bind="text: TitleDisplay"></span>
                         </section>
                         <section class="extra-info small">
-                            <span data-bind="text: bitrateDisplay"></span>
-                            <span class="file-size" data-bind="text: fileSizeInMegaBytesDisplay"></span>
+                            <span data-bind="text: BitrateDisplay"></span>
+                            <span class="file-size" data-bind="text: FileSizeInMegaBytesDisplay"></span>
                         </section>
                     </div>
                     <div class="col-xs-3 col-right text-right">
-                        <span data-bind="text: durationDisplay" class="small duration"></span>
+                        <span data-bind="text: DurationDisplay" class="small duration"></span>
                         <section class="actions">
                             <a href="#" class="btn btn-default btn-xs" data-toggle="tooltip" title="Edit"
                                data-bind="click: $root.editSong">
                                 <span class="glyphicon glyphicon-cog"></span>
                             </a>
                             <a class="btn btn-default btn-xs" data-toggle="tooltip" title="Download"
-                               data-bind="click: $root.downloadSong, attr: {href: downloadUrl}">
+                               data-bind="click: $root.downloadSong, attr: {href: DownloadUrl}">
                                 <span class="glyphicon glyphicon-import"></span>
                             </a>
                             <a href="#" class="btn btn-danger btn-xs" data-toggle="tooltip" title="Remove"
@@ -193,8 +193,8 @@
             </div>
             <div class="modal-body">
                 <div>You are about to delete the following song:</div>
-                <h4>"<span data-bind="text: song().titleDisplay"></span>" by
-                    <span data-bind="text: song().artistDisplay"></span>
+                <h4>"<span data-bind="text: song().TitleDisplay"></span>" by
+                    <span data-bind="text: song().ArtistDisplay"></span>
                 </h4>
                 <div>Are you sure?</div>
             </div>
@@ -218,19 +218,19 @@
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     Edit song info if you like. Press "Exit" to finish editing
                 </div>
-                <img data-bind="attr: {src: song().albumCoverPicturePath}" alt="Album cover" class="center-block album-cover img-thumbnail" />
+                <img data-bind="attr: {src: song().AlbumCoverPicturePath}" alt="Album cover" class="center-block album-cover img-thumbnail" />
                 <form role="form" data-bind="with: song, submit: $root.updateSong">
                     <div class="form-group">
                         <label for="song-title">Title</label>
-                        <input id="song-title" type="text" class="form-control" data-bind="value: title" placeholder="Title" />
+                        <input id="song-title" type="text" class="form-control" data-bind="value: Title" placeholder="Title" />
                     </div>
                     <div class="form-group">
                         <label for="song-artist">Artist</label>
-                        <input id="song-artist" type="text" class="form-control" data-bind="value: artist" placeholder="Artist" />
+                        <input id="song-artist" type="text" class="form-control" data-bind="value: Artist" placeholder="Artist" />
                     </div>
                     <div class="form-group">
                         <label for="song-album">Album</label>
-                        <input id="song-album" type="text" class="form-control" data-bind="value: album" placeholder="Album" />
+                        <input id="song-album" type="text" class="form-control" data-bind="value: Album" placeholder="Album" />
                     </div>
                     <div class="form-group">
                         <label for="song-tags">Tags</label>

@@ -14,7 +14,7 @@
         if (!filter) return self.songs();
         return ko.utils.arrayFilter(self.songs(), function(song) {
             var search = new RegExp(filter, 'i');
-            return song.fullTitle().match(search);
+            return song.FullTitle().match(search);
         });
     });
 
@@ -54,7 +54,7 @@
     };
     
     self.deleteSong = function() {
-        $.post('/song/delete', { id: self.song().id }).done(function(resp) {
+        $.post('/song/delete', { id: self.song().Id }).done(function(resp) {
             self.songs.remove(self.song());
         });
     };
@@ -75,10 +75,10 @@
         $('#song-edit-modal').on('hide.bs.modal', function() {
             var tags = $('#song-tags').val().split(',');
             console.log('tags:', tags);
-            self.song().tags([]);
+            self.song().Tags([]);
             if (tags.length != 1 || tags[0] != '') { // has any tags
                 ko.utils.arrayForEach(tags, function(tag) {
-                    self.song().tags.push({ id: 0, name: tag });
+                    self.song().Tags.push({ id: 0, name: tag });
                 });
             }
             self.updateSong();
@@ -86,12 +86,14 @@
     };
     
     self.editSong = function(song) {
+        console.log('editing song:', song);
         self.song(song);
         var tagInput = $('#song-tags');
         tagInput.tagsinput();
-        ko.utils.arrayForEach(self.song().tags(), function(tag) {
+        ko.utils.arrayForEach(self.song().Tags(), function(tag) {
             tagInput.tagsinput('add', tag.name);
         });
+        console.log('showing edit song modal');
         $('#song-edit-modal').modal('show');
     };
     

@@ -61,16 +61,16 @@ namespace SocialApp.Controllers
             return View(model);
         }
 
-        public JsonCamelCaseResult UploadedSongs()
+        public JsonResult UploadedSongs()
         {
             IEnumerable<Song> songs = userService.GetUploadedSongs(CurrentUserId);
-            return new JsonCamelCaseResult(songs, JsonRequestBehavior.AllowGet);
+            return Json(songs, JsonRequestBehavior.AllowGet);
 
         }
 
-        public JsonCamelCaseResult Current()
+        public JsonResult Current()
         {
-            return new JsonCamelCaseResult(db.Users.Find(CurrentUserId), JsonRequestBehavior.AllowGet);
+            return Json(db.Users.Find(CurrentUserId), JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Library()

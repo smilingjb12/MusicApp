@@ -1,55 +1,57 @@
 ﻿function SongViewModel(json) {
+    window.json = json;
     var self = this;
 
-    self.id = ko.observable(json.id);
-    self.title = ko.observable(json.title);
-    self.artist = ko.observable(json.artist);
-    self.album = ko.observable(json.album);
-    self.likes = ko.observable(json.likes);
-    self.tags = ko.observableArray(json.tags);
-    self.albumCoverPicturePath = ko.observable(json.albumCoverPicturePath);
-    self.duration = ko.observable(json.duration);
-    self.fileSizeInMegaBytes = ko.observable(json.fileSizeInMegaBytes);
-    self.bitrate = ko.observable(json.bitrate);
-    self.filePath = ko.observable(json.filePath);
+    self.Id = ko.observable(json.Id);
+    self.Title = ko.observable(json.Title);
+    self.Artist = ko.observable(json.Artist);
+    self.Album = ko.observable(json.Album);
+    self.Likes = ko.observable(json.Likes);
+    self.Tags = ko.observableArray(json.Tags);
+    self.AlbumCoverPicturePath = ko.observable(json.AlbumCoverPicturePath);
+    self.Duration = ko.observable(json.Duration);
+    self.FileSizeInMegaBytes = ko.observable(json.FileSizeInMegaBytes);
+    self.Bitrate = ko.observable(json.Bitrate);
+    self.FilePath = ko.observable(json.FilePath);
 
-    self.artistDisplay = ko.computed(function() {
-        return self.artist() == null || self.artist() == '' ? 'Unknown' : self.artist();
+    self.ArtistDisplay = ko.computed(function() {
+        return self.Artist() == null || self.Artist() == '' ? 'Unknown' : self.Artist();
     });
 
-    self.titleDisplay = ko.computed(function() {
-        return self.title() == null || self.artist() == '' ? 'Unknown' : self.title();
+    self.TitleDisplay = ko.computed(function() {
+        return self.Title() == null || self.Artist() == '' ? 'Unknown' : self.Title();
     });
 
-    self.fullTitle = ko.computed(function() {
-        return self.artist() + ' ' + self.title();
+    self.FullTitle = ko.computed(function() {
+        return self.Artist() + ' ' + self.Title();
+    });
+    
+    self.FullTitleDisplay = ko.computed(function() {
+        return '"' + self.Title() + '"' + ' by ' + self.Artist();
     });
 
-    self.durationDisplay = ko.computed(function() {
-        if (!self.duration()) return null;
-        var parts = self.duration().split(':');
-        var mapped = parts.filter(function(part) {
-            return parseInt(part) != 0;
-        }).map(function(x) {
-            return parseInt(x);
-        });
-        var seconds = mapped[mapped.length - 1];
-        if (seconds.toString().length == 1) {
-            seconds = '0' + seconds;
-            mapped[mapped.length - 1] = seconds;
+    self.DurationDisplay = ko.computed(function() {
+        if (!self.Duration()) return null;
+        var duration = self.Duration();
+        var hours = duration.Hours;
+        var minutes = duration.Minutes;
+        var seconds = duration.Seconds;
+        if (hours != 0) {
+            return hours + ':' + (minutes > 9 ? minutes : '0' + minutes) + ':' + seconds;
+        } else {
+            return minutes + ':' + (seconds > 9 ? seconds : '0' + seconds);
         }
-        return mapped.join(':');
     });
 
-    self.bitrateDisplay = ko.computed(function() {
-        return self.bitrate() + ' kbps';
+    self.BitrateDisplay = ko.computed(function() {
+        return self.Bitrate() + ' kbps';
     });
 
-    self.fileSizeInMegaBytesDisplay = ko.computed(function() {
-        return self.fileSizeInMegaBytes() + ' MB';
+    self.FileSizeInMegaBytesDisplay = ko.computed(function() {
+        return self.FileSizeInMegaBytes() + ' MB';
     });
 
-    self.downloadUrl = ko.computed(function() {
-        return '/song/download/' + self.id();
+    self.DownloadUrl = ko.computed(function() {
+        return '/song/download/' + self.Id();
     });
 }

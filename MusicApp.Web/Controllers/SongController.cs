@@ -50,11 +50,11 @@ namespace SocialApp.Controllers
             return Json(string.Empty);
         }
 
-        public JsonCamelCaseResult Search(string term)
+        public JsonResult Search(string term)
         {
             term = term.ToLower();
             var songs = db.Songs.Where(s => s.Artist.ToLower().Contains(term) || s.Title.ToLower().Contains(term));
-            return new JsonCamelCaseResult(songs, JsonRequestBehavior.AllowGet);
+            return Json(songs, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -76,7 +76,7 @@ namespace SocialApp.Controllers
         }
 
         [HttpPost]
-        public JsonCamelCaseResult Upload()
+        public JsonResult Upload()
         {
             byte[] songBytes = FileUtils.ReadBytesFromStream(Request.InputStream);
             string fileName = string.Format("{0}.mp3", FileUtils.GenerateFileName());
@@ -121,7 +121,7 @@ namespace SocialApp.Controllers
             db.Songs.Add(song);
             db.SaveChanges();
 
-            return new JsonCamelCaseResult(song, JsonRequestBehavior.DenyGet);
+            return Json(song, JsonRequestBehavior.DenyGet);
         }
 
     }

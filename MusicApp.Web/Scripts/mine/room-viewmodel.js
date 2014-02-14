@@ -24,6 +24,8 @@ var chat = {
             $.extend(data, { type: 'message' });
         } else if (type == 'user.left') {
             $.extend(data, { text: ' left the room', type: 'left' });
+        } else if (type == 'song.added') {
+            $.extend(data, { text: ' added ' + data.song + ' to playlist', type: 'misc' });
         }
         var rendered = Mustache.render(messageTmpl, data);
         $('#chat').append(rendered)
@@ -42,8 +44,8 @@ function AppViewModel() {
     window.songs = self.searchedSongs; // TODO: REMOVE THIS
 
     self.addSongToPlaylist = function(song) {
-        console.log('adding song to playlist:', song.id());
-        hub.server.addSongToPlaylist(song.id(), roomId).fail(function(e) {
+        console.log('adding song to playlist:', song.Id());
+        hub.server.addSongToPlaylist(song.Id(), roomId).fail(function(e) {
             console.error(e);
         });
     };
@@ -128,11 +130,21 @@ $.extend($.connection.musicRoomHub.client, {
     onRoomDestroyed: function() {
         window.location = '/room/destroyed/' + roomId;
     },
+    
+    onSongAddedToPlaylist: function(whoAdded, song) {
+        console.log('onSongAddedToPlaylist(), song:', song, ', who added:', whoAdded);
+        var songViewModel = new SongViewModel(song);
+        window.song = song;
+        window.vm = songViewModel;
+        console.log('songViewModel:', songViewModel);
+        app.playlist.push(songViewModel);
+        chat.addMessage({ type: 'song.added', data: { username: whoAdded, song: songViewModel.FullTitleDisplay() } });
+    },
 
-    onPlaylistReceived: function(playlist) {
-        console.log('received playlist: ', playlist);
+    onPlaylistReceived: function(data) {
+        console.log('received playlist:', data.playlist);
         app.playlist.removeAll();
-        ko.utils.arrayForEach(playlist, function(song) {
+        ko.utils.arrayForEach(data.playlist, function(song) {
             app.playlist.push(new SongViewModel(song));
         });
     }
