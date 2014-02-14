@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using AutoMapper;
 using Business.Services;
@@ -41,7 +43,7 @@ namespace SocialApp.Controllers
             if (model.Picture != null)
             {
                 string extension = System.IO.Path.GetExtension(model.Picture.FileName);
-                string relativePicturePath = string.Format("{0}/{1}{2}", Strings.ProfilePicturesFolder, GenerateFileName(), extension);
+                string relativePicturePath = string.Format("{0}/{1}{2}", WebConfigurationManager.AppSettings["ProfilePicturesFolderPath"], FileUtils.GenerateFileName(), extension);
                 string serverPicturePath = Server.MapPath(string.Format("~/{0}", relativePicturePath));
                 model.Picture.SaveAs(serverPicturePath);
                 currentUser.PictureFilePath = relativePicturePath;

@@ -79,7 +79,7 @@ namespace SocialApp.Controllers
         public JsonCamelCaseResult Upload()
         {
             byte[] songBytes = FileUtils.ReadBytesFromStream(Request.InputStream);
-            string fileName = string.Format("{0}.mp3", GenerateFileName());
+            string fileName = string.Format("{0}.mp3", FileUtils.GenerateFileName());
             string songServerDirectory = Server.MapPath("~" + SongDirectory);
             if (!Directory.Exists(songServerDirectory))
             {
@@ -108,7 +108,7 @@ namespace SocialApp.Controllers
             if (albumCover != null)
             {
                 string extension = albumCover.MimeType.Substring(albumCover.MimeType.LastIndexOf('/') + 1);
-                string picFileName = string.Format("{0}.{1}", GenerateFileName(), extension);
+                string picFileName = string.Format("{0}.{1}", FileUtils.GenerateFileName(), extension);
                 string picPath = string.Format("{0}{1}", AlbumCoverDirectory, picFileName);
                 System.IO.File.WriteAllBytes(Server.MapPath("~" + picPath), albumCover.Data.ToArray());
                 song.AlbumCoverPicturePath = picPath;

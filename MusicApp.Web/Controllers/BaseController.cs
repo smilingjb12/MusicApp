@@ -21,10 +21,5 @@ namespace SocialApp.Controllers
                 return WebSecurity.GetUserId(User.Identity.Name);
             }
         }
-
-        public string GenerateFileName()
-        {
-            return Guid.NewGuid().ToString("N");
-        }
     }
 }

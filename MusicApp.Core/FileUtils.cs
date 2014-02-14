@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Data
 {
@@ -16,6 +17,11 @@ namespace Data
                 }
                 return ms.ToArray();
             }
+        }
+
+        public static string GenerateFileName()
+        {
+            return Guid.NewGuid().ToString("N");
         }
     }
 }
