@@ -213,6 +213,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SongController.cs" />
@@ -223,8 +224,11 @@
     <Compile Include="Hubs\MusicRoomHub.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\EmailSender.cs" />
+    <Compile Include="Models\HtmlHelperExtensions.cs" />
     <Compile Include="Models\IEmailSender.cs" />
     <Compile Include="Models\JsonCamelCaseResult.cs" />
+    <Compile Include="Models\MailIndexViewModel.cs" />
+    <Compile Include="Models\MailMessageViewModel.cs" />
     <Compile Include="Models\RoomDetailsViewModel.cs" />
     <Compile Include="Models\UserUpdateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -384,6 +388,9 @@
     <Content Include="Views\Room\List.cshtml" />
     <Content Include="Views\Room\Create.cshtml" />
     <Content Include="Views\Room\Details.cshtml" />
+    <Content Include="Views\Mail\Index.cshtml" />
+    <Content Include="Views\Mail\_MessageSummary.cshtml" />
+    <Content Include="Views\Mail\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

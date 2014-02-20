@@ -13,6 +13,7 @@ namespace SocialApp.Controllers
             this.db = db;
         }
 
+        [ChildActionOnly]
         public PartialViewResult TopBar()
         {
             User user = db.Users.Find(CurrentUserId);

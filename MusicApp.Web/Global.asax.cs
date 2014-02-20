@@ -17,7 +17,7 @@ namespace SocialApp
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static void CreateTestUser()
+        private static void CreateTestUsers()
         {
             using (var db = new SocialAppContext())
             {
@@ -44,9 +44,7 @@ namespace SocialApp
                         About = "About",
                         PictureFilePath = "/Content/images/default-profile-picture-b&w.png"
                     });
-                    db.Users.Add(user);
                 }
-                db.SaveChanges();
             }   
         }
 
@@ -64,7 +62,7 @@ namespace SocialApp
             AutoMapperConfig.RegisterMappings();
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
 
-            CreateTestUser();
+            CreateTestUsers();
         }
     }
 }

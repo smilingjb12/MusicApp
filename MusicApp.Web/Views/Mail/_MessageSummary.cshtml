@@ -1,0 +1,40 @@
+﻿@using Data.Domain
+@model MailMessage
+
+<li class="list-group-item">
+    <div class="row">
+        <div class="col-xs-2">
+            <figure class="user-picture">
+                @if (Model.IsInboxMessage)
+                {
+                    <img src="@Model.Sender.PictureFilePath" class="img-thumbnail"alt="@Model.Sender.FullName" />
+                }
+                else
+                {
+                    <img src="@Model.Receiver.PictureFilePath" class="img-thumbnail" alt="@Model.Receiver.FullName" />
+                }
+                <figcaption class="text-center">
+                    @if (Model.IsInboxMessage)
+                    {
+                        @Model.Sender.FullName
+                    }
+                    else
+                    {
+                        @Model.Receiver.FullName
+                    }
+                </figcaption>
+            </figure>
+        </div>
+        <div class="col-xs-10">
+            <span class="text-muted">@Model.Date.ToString("dd.MM.yyyy hh:mm:ss")</span>
+            <p class="message-text short-message">@Html.Truncate(Model.Text, MailMessage.DisplayableTextSize)</p>
+            <p class="message-text hidden full-message">
+                @Model.Text
+            </p>
+            @if (Model.Text.Length > MailMessage.DisplayableTextSize)
+            {
+                <a href="#" class="btn btn-default btn-sm btn-view pull-right">View full message</a>
+            }
+        </div>
+    </div>
+</li>

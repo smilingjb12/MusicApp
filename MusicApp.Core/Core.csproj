@@ -47,6 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\MailMessage.cs" />
     <Compile Include="Domain\PlaylistSong.cs" />
     <Compile Include="Domain\Room.cs" />
     <Compile Include="EnumerableExtensions.cs" />

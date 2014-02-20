@@ -17,6 +17,7 @@ namespace DataAccess
         public DbSet<Song> Songs { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<MailMessage> MailMessages { get; set; }
 
         public SocialAppContext()
         {
@@ -40,6 +41,7 @@ namespace DataAccess
             modelBuilder.Configurations.Add(new SongConfiguration());
             modelBuilder.Configurations.Add(new TagConfiguration());
             modelBuilder.Configurations.Add(new RoomConfiguration());
+            modelBuilder.Configurations.Add(new MailMessageConfiguration());
         }
     }
 }
