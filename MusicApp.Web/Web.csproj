@@ -223,15 +223,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\MusicRoomHub.cs" />
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\EmailSender.cs" />
     <Compile Include="Models\HtmlHelperExtensions.cs" />
     <Compile Include="Models\IEmailSender.cs" />
     <Compile Include="Models\JsonCamelCaseResult.cs" />
     <Compile Include="Models\MailIndexViewModel.cs" />
-    <Compile Include="Models\MailMessageViewModel.cs" />
-    <Compile Include="Models\RoomDetailsViewModel.cs" />
-    <Compile Include="Models\UserUpdateModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

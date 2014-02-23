@@ -22,53 +22,39 @@ namespace SocialApp.Controllers
         private const string SongDirectory = "/Content/Uploads/Songs/";
         private const string AlbumCoverDirectory = "/Content/Uploads/AlbumCovers/";
 
-        private readonly SocialAppContext db;
-        private readonly ITagService tagService;
+        private readonly ISongService songService;
 
-        public SongController(ITagService tagService, SocialAppContext db)
+        public SongController(ISongService songService)
         {
-            this.tagService = tagService;
-            this.db = db;
+            this.songService = songService;
         }
 
         [HttpPost]
         public JsonResult Update(Song song)
         {
-            Song existingSong = db.Songs
-                .Include(s => s.Tags)
-                .FirstOrDefault(s => s.Id == song.Id);
-            if (existingSong == null) return null;
-
-            existingSong.Title = song.Title;
-            existingSong.Artist = song.Artist;
-            existingSong.Album = song.Album;
-            existingSong.Tags = tagService
-                .GetOrCreateTags(song.Tags.Select(t => t.Name))
-                .ToList();
-
-            db.SaveChanges();
+            if (!songService.UpdateSongInfo(song))
+            {
+                return null;
+            }
             return Json(string.Empty);
         }
 
         public JsonResult Search(string term)
         {
-            term = term.ToLower();
-            var songs = db.Songs.Where(s => s.Artist.ToLower().Contains(term) || s.Title.ToLower().Contains(term));
+            var songs = songService.SearchByTerm(term);
             return Json(songs, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult Delete(int id)
         {
-            Song song = db.Songs.Find(id);
-            db.Songs.Remove(song);
-            db.SaveChanges();
+            songService.DeleteSong(id);
             return Json(string.Empty);
         }
 
         public FileResult Download(int id)
         {
-            Song song = db.Songs.Find(id);
+            Song song = songService.FindSongById(id);
             if (song == null) return null;
             string path = Server.MapPath("~" + song.FilePath);
             var fileStream = new FileStream(path, FileMode.Open);
@@ -118,9 +104,7 @@ namespace SocialApp.Controllers
                 song.AlbumCoverPicturePath = WebConfigurationManager.AppSettings["DefaultAlbumCoverPicturePath"];
             }
 
-            db.Songs.Add(song);
-            db.SaveChanges();
-
+            songService.AddSong(song);
             return Json(song, JsonRequestBehavior.DenyGet);
         }
 

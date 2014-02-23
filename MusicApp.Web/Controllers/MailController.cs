@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Business.Services;
 using Data.Domain;
 using DataAccess;
 using System.Data.Entity;
@@ -13,26 +14,20 @@ namespace SocialApp.Controllers
     [Authorize]
     public class MailController : BaseController
     {
-        private readonly SocialAppContext db;
+        private readonly IMailService mailService;
+        private readonly IUserService userService;
 
-        public MailController(SocialAppContext db)
+        public MailController(SocialAppContext db, IMailService mailService, IUserService userService)
         {
-            this.db = db;
+            this.mailService = mailService;
+            this.userService = userService;
         }
 
         public ViewResult Index(string tab)
         {
-            var query = db.MailMessages
-                          .Include(m => m.Sender)
-                          .Include(m => m.Receiver)
-                          .OrderByDescending(m => m.Date);
-            var inbox = query.Where(m => m.Receiver.Id == CurrentUserId).ToList();
-            var outbox = query.Where(m => m.Sender.Id == CurrentUserId).ToList();
-            inbox.ForEach(msg => msg.IsInboxMessage = true); // kostyli-kostyliki
             var model = new MailIndexViewModel
             {
-                ReceivedMessages = inbox,
-                SentMessages = outbox,
+                MailViewModel = mailService.GetMailForUser(CurrentUserId),
                 ActiveTab = tab
             };
             return View(model);
@@ -42,7 +37,7 @@ namespace SocialApp.Controllers
         {
             var model = new MailMessageViewModel
             {
-                Users = db.Users.ToList()
+                Users = userService.GetAllUsers()
             };
             return View(model);
         }
@@ -52,18 +47,14 @@ namespace SocialApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                message.Users = db.Users.ToList();
+                message.Users = userService.GetAllUsers();
                 return View(message);
             }
-            var msg = new MailMessage
-            {
-                Date = DateTime.Now,
-                Sender = db.Users.Find(CurrentUserId),
-                Receiver = db.Users.Find(message.ReceiverId),
-                Text = message.Text
-            };
-            db.MailMessages.Add(msg);
-            db.SaveChanges();
+            var msg = mailService.AddMessage(
+                senderId: CurrentUserId, 
+                receiverId: (int)message.ReceiverId, 
+                text: message.Text
+            );
             TempData["success"] = string.Format("Your message has been successfully sent to {0}", msg.Receiver.FullName);
             return RedirectToAction("Index", new { tab = "outbox" });
         }

@@ -38,11 +38,11 @@
         <div class="tab-content">
             <div class="tab-pane active" id="inbox">
                 <ul class="list-group">
-                    @if (!Model.ReceivedMessages.Any())
+                    @if (!Model.MailViewModel.ReceivedMessages.Any())
                     {
                         <li class="list-group-item">No items</li>
                     }
-                    @foreach (MailMessage msg in Model.ReceivedMessages)
+                    @foreach (MailMessage msg in Model.MailViewModel.ReceivedMessages)
                     {
                         @Html.Partial("_MessageSummary", msg)
                     }
@@ -50,11 +50,11 @@
             </div>
             <div class="tab-pane" id="outbox">
                 <ul class="list-group">
-                    @if (!Model.SentMessages.Any())
+                    @if (!Model.MailViewModel.SentMessages.Any())
                     {
                         <li class="list-group-item">No items</li>
                     }
-                    @foreach (MailMessage msg in Model.SentMessages)
+                    @foreach (MailMessage msg in Model.MailViewModel.SentMessages)
                     {
                         @Html.Partial("_MessageSummary", msg)
                     }

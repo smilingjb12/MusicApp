@@ -17,18 +17,16 @@ namespace SocialApp.Controllers
     [Authorize]
     public class UserController : BaseController
     {
-        private readonly SocialAppContext db;
         private readonly IUserService userService;
 
-        public UserController(SocialAppContext db, IUserService userService)
+        public UserController(IUserService userService)
         {
-            this.db = db;
             this.userService = userService;
         }
 
         public ActionResult Show(int id)
         {
-            User user = db.Users.Find(id);
+            User user = userService.FindUserById(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -39,7 +37,7 @@ namespace SocialApp.Controllers
         [HttpPost]
         public ActionResult Update(UserUpdateModel model)
         {
-            User currentUser = db.Users.Find(CurrentUserId);
+            User currentUser = userService.FindUserById(CurrentUserId);
             if (model.Picture != null)
             {
                 string extension = System.IO.Path.GetExtension(model.Picture.FileName);
@@ -48,15 +46,13 @@ namespace SocialApp.Controllers
                 model.Picture.SaveAs(serverPicturePath);
                 currentUser.PictureFilePath = relativePicturePath;
             }
-            Mapper.Map(model, currentUser);
-            db.SaveChanges();
-
+            userService.UpdateUserInfo(currentUser.Id, model);
             return RedirectToAction("Settings");
         }
 
         public ViewResult Settings()
         {
-            User currentUser = db.Users.Find(CurrentUserId);
+            User currentUser = userService.FindUserById(CurrentUserId);
             var model = Mapper.Map<User, UserUpdateModel>(currentUser);
             return View(model);
         }
@@ -70,7 +66,7 @@ namespace SocialApp.Controllers
 
         public JsonResult Current()
         {
-            return Json(db.Users.Find(CurrentUserId), JsonRequestBehavior.AllowGet);
+            return Json(userService.FindUserById(CurrentUserId), JsonRequestBehavior.AllowGet);
         }
 
         public ViewResult Library()

@@ -1,7 +1,10 @@
+using System.Linq;
+using System.Reflection;
 using Business;
 using Business.Services;
 using DataAccess;
 using SocialApp.Models;
+using WebGrease.Css.Extensions;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(SocialApp.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(SocialApp.App_Start.NinjectWebCommon), "Stop")]
@@ -62,14 +65,20 @@ namespace SocialApp.App_Start
                   .ToSelf()
                   .InRequestScope();
 
-            kernel.Bind<ITagService>()
-                  .To<TagService>();
-
-            kernel.Bind<IUserService>()
-                  .To<UserService>();
-
             kernel.Bind<IEmailSender>()
                   .To<EmailSender>();
+
+            var serviceTypes = typeof(IUserService).Assembly
+                .GetTypes()
+                .Where(t => t.Name.EndsWith("Service"))
+                .ToList();
+            var interfaces = serviceTypes.Where(t => t.IsInterface);
+            var implementations = serviceTypes.Where(t => t.IsClass);
+            foreach (Type intf in interfaces)
+            {
+                Type implementation = implementations.First(impl => impl.Name == intf.Name.Replace("I", ""));
+                kernel.Bind(intf).To(implementation);
+            }
         }        
     }
 }

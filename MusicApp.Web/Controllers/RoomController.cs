@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Business.Services;
 using Data.Domain;
 using DataAccess;
 using System.Data.Entity;
@@ -13,16 +14,18 @@ namespace SocialApp.Controllers
     [Authorize]
     public class RoomController : BaseController
     {
-        private readonly SocialAppContext db;
+        private readonly IRoomService roomService;
+        private readonly IUserService userService;
 
-        public RoomController(SocialAppContext db)
+        public RoomController(IRoomService roomService, IUserService userService)
         {
-            this.db = db;
+            this.roomService = roomService;
+            this.userService = userService;
         }
 
         public ViewResult List()
         {
-            var rooms = db.Rooms.Include(r => r.Host).ToList();
+            var rooms = roomService.GetAllRoomsWithHosts();
             return View(rooms);
         }
 
@@ -38,18 +41,13 @@ namespace SocialApp.Controllers
             {
                 return View(room);
             }
-            User currentUser = db.Users
-                .Include(u => u.HostedRoom)
-                .FirstOrDefault(u => u.Id == CurrentUserId);
-            currentUser.HostedRoom = room;
-            db.SaveChanges();
-
+            roomService.HostRoom(userId: CurrentUserId, room: room);
             return RedirectToAction("Details", "Room", new { room.Id });
         }
 
         public ActionResult Details(int id)
         {
-            Room room = db.Rooms.Find(id);
+            Room room = roomService.FindById(id);
             if (room == null)
             {
                 return RedirectToAction("List");
@@ -57,7 +55,7 @@ namespace SocialApp.Controllers
             var model = new RoomDetailsViewModel
             {
                 Room = room,
-                CurrentUser = db.Users.Find(CurrentUserId),
+                CurrentUser = userService.FindUserById(CurrentUserId)
             };
             model.CurrentUserIsHost = model.Room == model.CurrentUser.HostedRoom;
             return View(model);

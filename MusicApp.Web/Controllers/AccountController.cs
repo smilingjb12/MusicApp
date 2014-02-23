@@ -5,6 +5,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Business.Services;
 using Data;
 using Data.Domain;
 using DataAccess;
@@ -20,26 +21,25 @@ namespace SocialApp.Controllers
     {
         public const string DefaultProfilePicturePath = "/Content/images/default_profile_2.png";
 
-        private readonly SocialAppContext db;
         private readonly IEmailSender emailSender;
+        private readonly IUserService userService;
 
-        public AccountController(SocialAppContext db, IEmailSender emailSender)
+        public AccountController(IEmailSender emailSender, IUserService userService)
         {
-            this.db = db;
             this.emailSender = emailSender;
+            this.userService = userService;
         }
 
         [AllowAnonymous]
         public ActionResult Activate(string code)
         {
-            User user = db.Users.FirstOrDefault(u => u.ActivationCode == code);
+            User user = userService.FindUserByActivationCode(code);
             if (user == null)
             {
                 TempData["danger"] = "No user wtih given activation code was found";
                 return RedirectToAction("Index", "Home");
             }
-            user.IsActivated = true;
-            db.SaveChanges();
+            userService.ActivateUserAccount(user);
             LoginModel model = new LoginModel { Email = user.Email, Password = user.Password };
             return Login(model, returnUrl: null);
         }
@@ -61,7 +61,7 @@ namespace SocialApp.Controllers
             {
                 return View(model);
             }
-            User user = db.Users.FirstOrDefault(u => u.Email == model.Email);
+            User user = userService.FindUserByEmail(model.Email);
             if (user == null)
             {
                 TempData["danger"] = "Invalid email or password";
@@ -107,7 +107,7 @@ namespace SocialApp.Controllers
             {
                 return View(user);
             }
-            User existingUser = db.Users.FirstOrDefault(u => u.Email == user.Email);
+            User existingUser = userService.FindUserByEmail(user.Email);
             if (existingUser != null)
             {
                 ModelState.AddModelError("", "Email is already taken. Choose another");

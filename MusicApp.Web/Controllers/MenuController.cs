@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Business.Services;
 using Data.Domain;
 using DataAccess;
 
@@ -6,17 +7,17 @@ namespace SocialApp.Controllers
 {
     public class MenuController : BaseController
     {
-        private readonly SocialAppContext db;
+        private readonly IUserService userService;
 
-        public MenuController(SocialAppContext db)
+        public MenuController(IUserService userService)
         {
-            this.db = db;
+            this.userService = userService;
         }
 
         [ChildActionOnly]
         public PartialViewResult TopBar()
         {
-            User user = db.Users.Find(CurrentUserId);
+            User user = userService.FindUserById(CurrentUserId);
             return PartialView(user);
         }
 
