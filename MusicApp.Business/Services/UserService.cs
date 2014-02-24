@@ -58,11 +58,44 @@ namespace Business.Services
             return user;
         }
 
-        public void UpdateUserInfo(int userId, UserUpdateModel updateModel)
+        public void UpdateUserInfo(int userId, UserUpdateViewModel updateViewModel)
         {
             User user = FindUserById(userId);
-            Mapper.Map(updateModel, user);
+            Mapper.Map(updateViewModel, user);
             db.SaveChanges();
+        }
+
+        public void SendFriendRequest(int senderId, int receiverId)
+        {
+            User sender = db.Users.Find(senderId);
+            User receiver = db.Users.Find(receiverId);
+            receiver.FriendRequests.Add(sender);
+            db.SaveChanges();
+        }
+
+        public ProfileViewModel GetProfileInfoFor(int userId, int currentUserId)
+        {
+            User viewedUser = db.Users
+                                .Include(u => u.Friends)
+                                .Include(u => u.FriendRequests)
+                                .FirstOrDefault(u => u.Id == userId);
+            if (viewedUser == null) return null;
+            var profile = new ProfileViewModel
+            {
+                ViewedUser = viewedUser,
+                IsMyProfile = userId == currentUserId,
+                CurrentUserId = currentUserId
+            };
+            if (profile.IsMyProfile) return profile; // no need for extra logic
+            if (viewedUser.FriendRequests.Any(f => f.Id == currentUserId))
+            {
+                profile.RelationshipStatus = RelationshipStatus.RequestedFriend;
+            }
+            else if (viewedUser.Friends.Any(f => f.Id == currentUserId))
+            {
+                profile.RelationshipStatus = RelationshipStatus.Friend;
+            }
+            return profile;
         }
 
         public void ActivateUserAccount(User user)

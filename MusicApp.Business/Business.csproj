@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RelationshipStatus.cs" />
     <Compile Include="Services\IMailService.cs" />
     <Compile Include="Services\IRoomService.cs" />
     <Compile Include="Services\ISongService.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="ViewModels\AccountModels.cs" />
     <Compile Include="ViewModels\MailMessageViewModel.cs" />
     <Compile Include="ViewModels\MailViewModel.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\RoomDetailsViewModel.cs" />
     <Compile Include="ViewModels\UserUpdateModel.cs" />
   </ItemGroup>

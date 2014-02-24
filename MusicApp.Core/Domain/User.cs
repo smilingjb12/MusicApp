@@ -10,6 +10,8 @@ namespace Data.Domain
         {
             Role = Role.User;    
             UploadedSongs = new List<Song>();
+            Friends = new List<User>();
+            FriendRequests = new List<User>();
         }
 
         public int Id { get; set; }
@@ -32,6 +34,8 @@ namespace Data.Domain
         public string ConnectionId { get; set; }
 
         public IList<Song> UploadedSongs { get; set; }
+        public IList<User> Friends { get; set; }
+        public IList<User> FriendRequests { get; set; }
         public Room HostedRoom { get; set; }
 
         [NotMapped]

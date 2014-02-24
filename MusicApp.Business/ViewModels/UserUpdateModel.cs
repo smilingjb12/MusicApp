@@ -2,7 +2,7 @@
 
 namespace SocialApp.Models
 {
-    public class UserUpdateModel
+    public class UserUpdateViewModel
     {
         public string FullName { get; set; }
         public string Country { get; set; }

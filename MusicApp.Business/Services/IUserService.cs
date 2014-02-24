@@ -17,6 +17,8 @@ namespace Business.Services
         User FindUserById(int id);
         IEnumerable<User> GetAllUsers();
         User FindUserWithHostedRoom(int userId);
-        void UpdateUserInfo(int userId, UserUpdateModel updateModel);
+        void UpdateUserInfo(int userId, UserUpdateViewModel updateViewModel);
+        void SendFriendRequest(int senderId, int receiverId);
+        ProfileViewModel GetProfileInfoFor(int userId, int  currentUserId);
     }
 }

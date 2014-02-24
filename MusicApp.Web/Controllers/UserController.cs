@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using AutoMapper;
+using Business;
 using Business.Services;
 using Data;
 using Data.Domain;
@@ -26,34 +27,43 @@ namespace SocialApp.Controllers
 
         public ActionResult Show(int id)
         {
-            User user = userService.FindUserById(id);
-            if (user == null)
+            var profile = userService.GetProfileInfoFor(
+                userId: id,
+                currentUserId: CurrentUserId
+            );
+            if (profile == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(profile);
         }
 
         [HttpPost]
-        public ActionResult Update(UserUpdateModel model)
+        public ActionResult Update(UserUpdateViewModel viewModel)
         {
             User currentUser = userService.FindUserById(CurrentUserId);
-            if (model.Picture != null)
+            if (viewModel.Picture != null)
             {
-                string extension = System.IO.Path.GetExtension(model.Picture.FileName);
+                string extension = System.IO.Path.GetExtension(viewModel.Picture.FileName);
                 string relativePicturePath = string.Format("{0}/{1}{2}", WebConfigurationManager.AppSettings["ProfilePicturesFolderPath"], FileUtils.GenerateFileName(), extension);
                 string serverPicturePath = Server.MapPath(string.Format("~/{0}", relativePicturePath));
-                model.Picture.SaveAs(serverPicturePath);
+                viewModel.Picture.SaveAs(serverPicturePath);
                 currentUser.PictureFilePath = relativePicturePath;
             }
-            userService.UpdateUserInfo(currentUser.Id, model);
+            userService.UpdateUserInfo(currentUser.Id, viewModel);
             return RedirectToAction("Settings");
+        }
+
+        public ActionResult SendFriendRequest(int senderId, int receiverId)
+        {
+            userService.SendFriendRequest(senderId, receiverId);
+            return RedirectToAction("Show", new { id = CurrentUserId });
         }
 
         public ViewResult Settings()
         {
             User currentUser = userService.FindUserById(CurrentUserId);
-            var model = Mapper.Map<User, UserUpdateModel>(currentUser);
+            var model = Mapper.Map<User, UserUpdateViewModel>(currentUser);
             return View(model);
         }
 

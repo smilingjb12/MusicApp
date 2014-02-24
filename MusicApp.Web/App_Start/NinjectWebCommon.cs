@@ -72,8 +72,8 @@ namespace SocialApp.App_Start
                 .GetTypes()
                 .Where(t => t.Name.EndsWith("Service"))
                 .ToList();
-            var interfaces = serviceTypes.Where(t => t.IsInterface);
-            var implementations = serviceTypes.Where(t => t.IsClass);
+            var interfaces = serviceTypes.Where(t => t.IsInterface).ToList();
+            var implementations = serviceTypes.Where(t => t.IsClass).ToList();
             foreach (Type intf in interfaces)
             {
                 Type implementation = implementations.First(impl => impl.Name == intf.Name.Replace("I", ""));

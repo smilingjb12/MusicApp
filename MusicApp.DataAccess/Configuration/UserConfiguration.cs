@@ -13,7 +13,17 @@ namespace DataAccess.Configuration
     {
         public UserConfiguration()
         {
-            HasMany(u => u.UploadedSongs).WithRequired(s => s.Uploader).HasForeignKey(s => s.UploaderId);
+            this.HasMany(u => u.UploadedSongs)
+                .WithRequired(s => s.Uploader)
+                .HasForeignKey(s => s.UploaderId);
+
+            this.HasMany(u => u.Friends)
+                .WithMany()
+                .Map(m => m.ToTable("Friends"));
+
+            this.HasMany(u => u.FriendRequests)
+                .WithMany()
+                .Map(m => m.ToTable("FriendRequests"));
         }
     }
 }

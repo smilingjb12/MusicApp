@@ -13,10 +13,10 @@ namespace SocialApp.App_Start
     {
         public static void RegisterMappings()
         {
-            Mapper.CreateMap<UserUpdateModel, User>()
+            Mapper.CreateMap<UserUpdateViewModel, User>()
                 .ForMember(u => u.PictureFilePath, opt => opt.Ignore());
 
-            Mapper.CreateMap<User, UserUpdateModel>();
+            Mapper.CreateMap<User, UserUpdateViewModel>();
 
             Mapper.CreateMap<Id3Info, Song>();
         }
