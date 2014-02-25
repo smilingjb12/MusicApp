@@ -66,6 +66,7 @@
     <Compile Include="Services\TagService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\AccountModels.cs" />
+    <Compile Include="ViewModels\FriendsViewModel.cs" />
     <Compile Include="ViewModels\MailMessageViewModel.cs" />
     <Compile Include="ViewModels\MailViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />

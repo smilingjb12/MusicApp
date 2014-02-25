@@ -60,6 +60,30 @@ namespace SocialApp.Controllers
             return RedirectToAction("Show", new { id = CurrentUserId });
         }
 
+        public ActionResult Friends(string tab)
+        {
+            var friendsViewModel = userService.GetFriendsFor(CurrentUserId);
+            if (friendsViewModel == null) return HttpNotFound();
+            var viewModel = new UserFriendsViewModel
+            {
+                FriendsViewModel = friendsViewModel,
+                ActiveTab = tab
+            };
+            return View(viewModel);
+        }
+
+        public ActionResult AcceptFriendRequest(int userId)
+        {
+            userService.AcceptFriendRequest(userId, CurrentUserId);
+            return RedirectToAction("Friends", new { tab = "friend-requests" });
+        }
+
+        public ActionResult DeclineFriendRequest(int userId)
+        {
+            userService.DeclineUserRequest(userId, CurrentUserId);
+            return RedirectToAction("Friends", new { tab = "friend-requests" });
+        }
+
         public ViewResult Settings()
         {
             User currentUser = userService.FindUserById(CurrentUserId);
@@ -82,6 +106,12 @@ namespace SocialApp.Controllers
         public ViewResult Library()
         {
             return View();
+        }
+
+        public ActionResult RemoveFromFriends(int userId)
+        {
+            userService.RemoveFromFriends(userId, CurrentUserId);
+            return RedirectToAction("Friends", new { tab = "friends" });
         }
     }
 }

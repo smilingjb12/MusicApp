@@ -32,21 +32,25 @@
                         <h4 class="text-center">@Model.ViewedUser.Login</h4>
                         <a href="@Url.Action("SendFriendRequest", "User", 
                                              new { senderId = Model.CurrentUserId, receiverId = Model.ViewedUser.Id })" 
-                                  class="btn btn-primary btn-block">Send friend request</a>
+                                  class="btn btn-primary btn-block btn-sm">Send friend request</a>
                     }
                     else if (Model.RelationshipStatus == RelationshipStatus.RequestedFriend)
                     {
                         <h4 class="text-center">@Model.ViewedUser.Login</h4>
-                        <button class="btn btn-primary btn-block" disabled="disabled">Friend request was sent</button>
+                        <button class="btn btn-primary btn-block btn-sm" disabled="disabled">Friend request was sent</button>
                     }
                     else if (Model.RelationshipStatus == RelationshipStatus.Friend)
                     {
-                        <h4 class="text-center">@Model.ViewedUser.Login<span class="glyphicon glyphicon-ok-sign status"></span></h4>
+                        <h4 class="text-center">@Model.ViewedUser.Login
+                            <span class="glyphicon glyphicon-ok-sign status" data-toggle="tooltip" title="This person is your friend" data-placement="right"></span>
+                        </h4>
                     }
                 }
                 else if (Model.IsMyProfile)
                 {
-                    <h4 class="text-center">@Model.ViewedUser.Login<span class="glyphicon glyphicon-eye-open status"></span></h4>
+                    <h4 class="text-center">@Model.ViewedUser.Login
+                        <span class="glyphicon glyphicon-eye-open status" data-toggle="tooltip" title="This is you" data-placement="right"></span>
+                    </h4>
                 }
             </div>
         </div>
@@ -73,3 +77,10 @@
         </table>
     </div>
 </div>
+
+@section scripts
+{
+    <script>
+        $('[data-toggle="tooltip"]').tooltip();
+    </script>
+}

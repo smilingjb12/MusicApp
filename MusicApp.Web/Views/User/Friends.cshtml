@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Friends";
+}
+
+@model UserFriendsViewModel
+
+<style>
+    img.friend-pic {
+        max-width: 70px;
+    }
+    .tab-content {
+        padding-top: 10px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#friends" data-toggle="tab">Friends</a>
+            </li>
+            <li>
+                <a href="#friend-requests" data-toggle="tab">Requests</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="friends">
+                <ul class="list-group">
+                    @if (!Model.FriendsViewModel.Friends.Any())
+                    {
+                        <li class="list-group-item">You have no friends @* ;_; *@</li>
+                    }
+                    @foreach (var friend in Model.FriendsViewModel.Friends)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img class="img-thumbnail friend-pic" src="@friend.PictureFilePath" />
+                                </div>
+                                <div class="col-xs-9">
+                                    <p>@friend.Login</p>
+                                    <a href="@Url.Action("RemoveFromFriends", "User", new { userId = friend.Id })" class="btn btn-sm btn-default">Remove</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="tab-pane" id="friend-requests">
+                <ul class="list-group">
+                    @if (!Model.FriendsViewModel.FriendRequests.Any())
+                    {
+                        <li class="list-group-item">You have no friend requests @* ;_; *@</li>
+                    }
+                    @foreach (var user in Model.FriendsViewModel.FriendRequests)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img class="img-thumbnail friend-pic" src="@user.PictureFilePath" />
+                                </div>
+                                <div class="col-xs-9">
+                                    <p>@user.Login wants to be your friend</p>
+                                    <a href="@Url.Action("AcceptFriendRequest", "User", new { userId = user.Id })" class="btn btn-primary btn-sm">Accept</a>
+                                    <a href="@Url.Action("DeclineFriendRequest", "User", new { userId = user.Id })" class="btn btn-default btn-sm">Decline</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        var activeTab = '@Model.ActiveTab';
+        if (activeTab != '') {
+            $('.nav-tabs a[href="#' + activeTab + '"]').tab('show');
+        }
+    </script>
+}

@@ -51,3 +51,13 @@ body {
 .small {
     color: #666;
 }
+
+img.topbar-profile-pic {
+    width: 18px;
+    border-radius: 2px;
+}
+
+.notification-label {
+    display: inline-block;
+    line-height: 12px;
+}

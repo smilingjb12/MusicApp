@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using AutoMapper;
+using Business.ViewModels;
 using Data;
 using Data.Domain;
 using DataAccess;
@@ -96,6 +97,65 @@ namespace Business.Services
                 profile.RelationshipStatus = RelationshipStatus.Friend;
             }
             return profile;
+        }
+
+        public FriendsViewModel GetFriendsFor(int currentUserId)
+        {
+            User currentUser = db.Users
+                                 .Include(u => u.Friends)
+                                 .Include(u => u.FriendRequests)
+                                 .FirstOrDefault(u => u.Id == currentUserId);
+            if (currentUser == null) return null;
+            var friendsViewModel = new FriendsViewModel
+            {
+                Friends = currentUser.Friends,
+                FriendRequests = currentUser.FriendRequests
+            };
+            return friendsViewModel;
+        }
+
+        public IList<User> GetFriendRequestsFor(int userId)
+        {
+            User user = db.Users
+                          .Include(u => u.FriendRequests)
+                          .FirstOrDefault(u => u.Id == userId);
+            return user.FriendRequests;
+        }
+
+        public void AcceptFriendRequest(int requesterId, int currentUserId)
+        {
+            User requester = db.Users
+                               .Include(u => u.Friends)
+                               .FirstOrDefault(u => u.Id == requesterId);
+            User currentUser = db.Users
+                                 .Include(u => u.FriendRequests)
+                                 .Include(u => u.Friends)
+                                 .FirstOrDefault(u => u.Id == currentUserId);
+            currentUser.FriendRequests.Remove(requester);
+            currentUser.Friends.Add(requester);
+            requester.Friends.Add(currentUser);
+            db.SaveChanges();
+        }
+
+        public void DeclineUserRequest(int requesterId, int currentUserId)
+        {
+            User requester = db.Users.Find(requesterId);
+            User currentUser = db.Users.Include(u => u.FriendRequests).FirstOrDefault();
+            currentUser.FriendRequests.Remove(requester);
+            db.SaveChanges();
+        }
+
+        public void RemoveFromFriends(int userId, int currentUserId)
+        {
+            User currentUser = db.Users
+                                 .Include(u => u.Friends)
+                                 .FirstOrDefault(u => u.Id == currentUserId);
+            User removedUser = db.Users
+                                 .Include(u => u.Friends)
+                                 .FirstOrDefault(u => u.Id == userId);
+            currentUser.Friends.Remove(removedUser);
+            removedUser.Friends.Remove(currentUser);
+            db.SaveChanges();
         }
 
         public void ActivateUserAccount(User user)

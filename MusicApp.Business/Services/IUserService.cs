@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.ViewModels;
 using Data.Domain;
 using SocialApp.Models;
 
@@ -20,5 +21,10 @@ namespace Business.Services
         void UpdateUserInfo(int userId, UserUpdateViewModel updateViewModel);
         void SendFriendRequest(int senderId, int receiverId);
         ProfileViewModel GetProfileInfoFor(int userId, int  currentUserId);
+        FriendsViewModel GetFriendsFor(int currentUserId);
+        IList<User> GetFriendRequestsFor(int userId);
+        void AcceptFriendRequest(int requesterId, int currentUserId);
+        void DeclineUserRequest(int requesterId, int currentUserId);
+        void RemoveFromFriends(int userId, int currentUserId);
     }
 }

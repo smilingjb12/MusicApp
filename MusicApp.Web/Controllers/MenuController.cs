@@ -2,6 +2,7 @@
 using Business.Services;
 using Data.Domain;
 using DataAccess;
+using SocialApp.Models;
 
 namespace SocialApp.Controllers
 {
@@ -18,7 +19,13 @@ namespace SocialApp.Controllers
         public PartialViewResult TopBar()
         {
             User user = userService.FindUserById(CurrentUserId);
-            return PartialView(user);
+            if (user == null) return PartialView(new MenuTopBarViewModel());
+            var viewModel = new MenuTopBarViewModel
+            {
+                CurrentUser = user,
+                FriendRequests = userService.GetFriendRequestsFor(CurrentUserId)
+            };
+            return PartialView(viewModel);
         }
 
     }

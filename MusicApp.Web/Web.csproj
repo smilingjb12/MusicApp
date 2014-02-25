@@ -228,6 +228,8 @@
     <Compile Include="Models\IEmailSender.cs" />
     <Compile Include="Models\JsonCamelCaseResult.cs" />
     <Compile Include="Models\MailIndexViewModel.cs" />
+    <Compile Include="Models\MenuTopBarViewModel.cs" />
+    <Compile Include="Models\UserFriendsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +390,7 @@
     <Content Include="Views\Mail\Index.cshtml" />
     <Content Include="Views\Mail\_MessageSummary.cshtml" />
     <Content Include="Views\Mail\Create.cshtml" />
+    <Content Include="Views\User\Friends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
