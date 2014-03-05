@@ -85,6 +85,12 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="policy.2.0.taglib-sharp">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
     </Reference>
@@ -213,6 +219,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -249,6 +256,7 @@
     <Content Include="Content\images\default-album-cover.gif" />
     <Content Include="Content\images\default-profile-picture-b&amp;w.png" />
     <Content Include="Content\images\default_profile_2.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\room-details.css" />
     <Content Include="Content\signup.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -391,6 +399,7 @@
     <Content Include="Views\Mail\_MessageSummary.cshtml" />
     <Content Include="Views\Mail\Create.cshtml" />
     <Content Include="Views\User\Friends.cshtml" />
+    <Content Include="Views\Friend\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

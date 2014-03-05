@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Business.ViewModels;
@@ -17,6 +18,7 @@ namespace Business.Services
         User FindUserByEmail(string email);
         User FindUserById(int id);
         IEnumerable<User> GetAllUsers();
+        IEnumerable<User> GetAllUsers(Expression<Func<User, bool>> predicate);
         User FindUserWithHostedRoom(int userId);
         void UpdateUserInfo(int userId, UserUpdateViewModel updateViewModel);
         void SendFriendRequest(int senderId, int receiverId);

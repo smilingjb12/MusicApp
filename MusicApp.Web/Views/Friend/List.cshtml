@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "List";
+}
+@using PagedList.Mvc
+@model PagedList.IPagedList<Data.Domain.User>
+
+<style>
+    img.user-pic {
+        width: 60px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-7 col-xs-offset-3">
+        <ul class="list-group">
+            @foreach (var user in Model)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <img title="test" class="img-thumbnail user-pic" src="@user.PictureFilePath">
+                        </div>
+                        <div class="col-xs-10">
+                            @user.Login
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        @Html.PagedListPager(Model, page => Url.Action("List", new { userId = 1, page }))
+    </div>
+</div>

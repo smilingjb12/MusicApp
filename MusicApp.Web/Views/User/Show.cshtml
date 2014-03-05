@@ -103,7 +103,7 @@
                 }
                 @if (Model.ViewedUser.Friends.Count > FriendsToDisplay)
                 {
-                    <a href="#" class="pull-right">See all</a>
+                    <a href="@Url.Action("List", "Friend", new { userId = Model.ViewedUser.Id, page = 1})" class="pull-right">See all</a>
                 }
             </div>
         </div>
