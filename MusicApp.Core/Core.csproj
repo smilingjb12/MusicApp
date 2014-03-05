@@ -53,8 +53,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Domain\MailMessage.cs" />
     <Compile Include="Domain\PlaylistSong.cs" />
+    <Compile Include="Domain\WallMessage.cs" />
     <Compile Include="Domain\Room.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="FileUtils.cs" />

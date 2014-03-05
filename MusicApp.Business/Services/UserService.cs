@@ -74,18 +74,24 @@ namespace Business.Services
             db.SaveChanges();
         }
 
-        public ProfileViewModel GetProfileInfoFor(int userId, int currentUserId)
+        public ProfileViewModel GetProfileInfoFor(int viewedUserId, int currentUserId)
         {
             User viewedUser = db.Users
                                 .Include(u => u.Friends)
                                 .Include(u => u.FriendRequests)
-                                .FirstOrDefault(u => u.Id == userId);
+                                .FirstOrDefault(u => u.Id == viewedUserId);
             if (viewedUser == null) return null;
             var profile = new ProfileViewModel
             {
                 ViewedUser = viewedUser,
-                IsMyProfile = userId == currentUserId,
-                CurrentUserId = currentUserId
+                IsMyProfile = viewedUserId == currentUserId,
+                CurrentUserId = currentUserId,
+                WallMessages = GetWallMessagesForUser(viewedUserId),
+                NewWallMessage = new WallMessage
+                {
+                    ReceiverId = viewedUserId,
+                    SenderId = currentUserId
+                }
             };
             if (profile.IsMyProfile) return profile; // no need for extra logic
             if (viewedUser.FriendRequests.Any(f => f.Id == currentUserId))
@@ -137,7 +143,7 @@ namespace Business.Services
             db.SaveChanges();
         }
 
-        public void DeclineUserRequest(int requesterId, int currentUserId)
+        public void DeclineFriendRequest(int requesterId, int currentUserId)
         {
             User requester = db.Users.Find(requesterId);
             User currentUser = db.Users.Include(u => u.FriendRequests).FirstOrDefault();
@@ -147,14 +153,28 @@ namespace Business.Services
 
         public void RemoveFromFriends(int userId, int currentUserId)
         {
-            User currentUser = db.Users
-                                 .Include(u => u.Friends)
-                                 .FirstOrDefault(u => u.Id == currentUserId);
-            User removedUser = db.Users
-                                 .Include(u => u.Friends)
-                                 .FirstOrDefault(u => u.Id == userId);
-            currentUser.Friends.Remove(removedUser);
-            removedUser.Friends.Remove(currentUser);
+            var users = db.Users
+                          .Include(u => u.Friends)
+                          .Where(u => u.Id == userId || u.Id == currentUserId)
+                          .ToList();
+            users[0].Friends.Remove(users[1]);
+            users[1].Friends.Remove(users[0]);
+            db.SaveChanges();
+        }
+
+        public IEnumerable<WallMessage> GetWallMessagesForUser(int userId)
+        {
+            return db.WallMessages
+                     .Include(m => m.Sender)
+                     .Where(m => m.ReceiverId == userId)
+                     .OrderByDescending(m => m.Date)
+                     .ToList();
+        }
+
+        public void AddWallMessage(WallMessage wallMessage)
+        {
+            wallMessage.Date = DateTime.Now;
+            db.WallMessages.Add(wallMessage);
             db.SaveChanges();
         }
 

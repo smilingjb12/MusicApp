@@ -56,6 +56,7 @@
     <Compile Include="Configuration\SongConfiguration.cs" />
     <Compile Include="Configuration\TagConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />
+    <Compile Include="Configuration\WallMessageConfiguration.cs" />
     <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="SocialAppContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

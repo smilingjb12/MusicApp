@@ -20,11 +20,13 @@ namespace Business.Services
         User FindUserWithHostedRoom(int userId);
         void UpdateUserInfo(int userId, UserUpdateViewModel updateViewModel);
         void SendFriendRequest(int senderId, int receiverId);
-        ProfileViewModel GetProfileInfoFor(int userId, int  currentUserId);
+        ProfileViewModel GetProfileInfoFor(int viewedUserId, int  currentUserId);
         FriendsViewModel GetFriendsFor(int currentUserId);
         IList<User> GetFriendRequestsFor(int userId);
         void AcceptFriendRequest(int requesterId, int currentUserId);
-        void DeclineUserRequest(int requesterId, int currentUserId);
+        void DeclineFriendRequest(int requesterId, int currentUserId);
         void RemoveFromFriends(int userId, int currentUserId);
+        IEnumerable<WallMessage> GetWallMessagesForUser(int userId);
+        void AddWallMessage(WallMessage wallMessage);
     }
 }

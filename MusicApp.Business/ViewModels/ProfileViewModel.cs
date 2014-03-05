@@ -17,6 +17,8 @@ namespace SocialApp.Models
         public User ViewedUser { get; set; }
         public bool IsMyProfile { get; set; }
         public int CurrentUserId { get; set; }
+        public IEnumerable<WallMessage> WallMessages { get; set; }
+        public WallMessage NewWallMessage { get; set; }
 
         public bool IsNotMyProfile
         {

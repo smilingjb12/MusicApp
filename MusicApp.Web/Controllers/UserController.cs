@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace SocialApp.Controllers
         public ActionResult Show(int id)
         {
             var profile = userService.GetProfileInfoFor(
-                userId: id,
+                viewedUserId: id,
                 currentUserId: CurrentUserId
             );
             if (profile == null)
@@ -57,7 +58,7 @@ namespace SocialApp.Controllers
         public ActionResult SendFriendRequest(int senderId, int receiverId)
         {
             userService.SendFriendRequest(senderId, receiverId);
-            return RedirectToAction("Show", new { id = CurrentUserId });
+            return RedirectToAction("Show", new { id = receiverId });
         }
 
         public ActionResult Friends(string tab)
@@ -80,7 +81,7 @@ namespace SocialApp.Controllers
 
         public ActionResult DeclineFriendRequest(int userId)
         {
-            userService.DeclineUserRequest(userId, CurrentUserId);
+            userService.DeclineFriendRequest(userId, CurrentUserId);
             return RedirectToAction("Friends", new { tab = "friend-requests" });
         }
 
@@ -112,6 +113,12 @@ namespace SocialApp.Controllers
         {
             userService.RemoveFromFriends(userId, CurrentUserId);
             return RedirectToAction("Friends", new { tab = "friends" });
+        }
+
+        public ActionResult AddWallMessage(ProfileViewModel profile)
+        {
+            userService.AddWallMessage(profile.NewWallMessage);
+            return RedirectToAction("Show", new { id = profile.NewWallMessage.ReceiverId });
         }
     }
 }

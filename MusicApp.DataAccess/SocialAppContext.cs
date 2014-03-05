@@ -18,6 +18,7 @@ namespace DataAccess
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<MailMessage> MailMessages { get; set; }
+        public DbSet<WallMessage> WallMessages { get; set; }
 
         public SocialAppContext()
         {
@@ -42,6 +43,7 @@ namespace DataAccess
             modelBuilder.Configurations.Add(new TagConfiguration());
             modelBuilder.Configurations.Add(new RoomConfiguration());
             modelBuilder.Configurations.Add(new MailMessageConfiguration());
+            modelBuilder.Configurations.Add(new WallMessageConfiguration());
         }
     }
 }
