@@ -10,5 +10,6 @@ namespace SocialApp.Models
     {
         public User CurrentUser { get; set; }
         public IList<User> FriendRequests { get; set; }
+        public IEnumerable<MailMessage> UnreadMessages { get; set; }
     }
 }

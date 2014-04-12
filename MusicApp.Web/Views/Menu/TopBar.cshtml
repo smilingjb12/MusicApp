@@ -15,6 +15,10 @@
         <li>
             <a href="@Url.Action("Index", "Mail")">
                 <span class="glyphicon glyphicon-envelope"></span>&nbsp;Mail
+                @if (Model.UnreadMessages.Any())
+                {
+                    <span class="label label-danger notification-label">@Model.UnreadMessages.Count()</span>
+                }
             </a>
         </li>
         <li>

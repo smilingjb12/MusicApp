@@ -16,11 +16,13 @@ namespace SocialApp.Controllers
     {
         private readonly IRoomService roomService;
         private readonly IUserService userService;
+        private readonly IMailService mailService;
 
-        public RoomController(IRoomService roomService, IUserService userService)
+        public RoomController(IRoomService roomService, IUserService userService, IMailService mailService)
         {
             this.roomService = roomService;
             this.userService = userService;
+            this.mailService = mailService;
         }
 
         public ViewResult List()
@@ -65,6 +67,15 @@ namespace SocialApp.Controllers
         {
             TempData["danger"] = "Room has been destroyed by its host";
             return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        public JsonResult InviteUserToRoom(int senderId, int receiverId, int roomId)
+        {
+            string text = string.Format("I invite you to join my room. Here is the {0}", 
+                Url.Action("Details", new { id = roomId }));
+            mailService.AddMessage(senderId, receiverId, text);
+            return Json(new {success = true}, JsonRequestBehavior.AllowGet);
         }
 
     }

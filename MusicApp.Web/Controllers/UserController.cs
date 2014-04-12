@@ -85,6 +85,13 @@ namespace SocialApp.Controllers
             return RedirectToAction("Friends", new { tab = "friend-requests" });
         }
 
+        [HttpGet]
+        public JsonResult SearchUsersExceptCurrent(string term)
+        {
+            var users = userService.SearchUsersExceptCurrent(term, CurrentUserId);
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
+
         public ViewResult Settings()
         {
             User currentUser = userService.FindUserById(CurrentUserId);

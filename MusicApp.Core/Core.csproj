@@ -68,6 +68,7 @@
     <Compile Include="Domain\Song.cs" />
     <Compile Include="Domain\Tag.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -30,6 +30,7 @@ namespace SocialApp.Controllers
                 MailViewModel = mailService.GetMailForUser(CurrentUserId),
                 ActiveTab = tab
             };
+            mailService.MarkAllMessagesAsReadForUser(CurrentUserId);
             return View(model);
         }
 

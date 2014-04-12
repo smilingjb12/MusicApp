@@ -184,6 +184,16 @@ namespace Business.Services
             db.SaveChanges();
         }
 
+        public IEnumerable<User> SearchUsersExceptCurrent(string term, int currentUserId)
+        {
+            term = term.ToLower();
+            var filtered = db.Users
+                             .Where(u => u.Id != currentUserId)
+                             .Where(u => u.FullName.ToLower().Contains(term))
+                             .ToList();
+            return filtered;
+        }
+
         public void ActivateUserAccount(User user)
         {
             user.IsActivated = true;

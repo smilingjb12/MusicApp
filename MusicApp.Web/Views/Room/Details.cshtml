@@ -43,8 +43,8 @@
         <div class="panel panel-default" id="actions">
             <div class="panel-heading">Actions</div>
             <div class="panel-body">
-                <a href="#" class="btn btn-default btn-sm">Vote skip song</a>
-                <a href="#" class="btn btn-primary btn-sm" data-bind="click: showAddSongModal">Add song</a>
+                <a href="#" class="btn btn-primary btn-sm" data-bind="click: showAddSongModal">Add a song</a>
+                <a href="#" class="btn btn-success btn-sm" data-bind="click: showInviteAFriendModal">Invite a friend</a>
             </div>
         </div>
     </div>
@@ -65,6 +65,9 @@
                             </td>
                         </tr>
                     </tbody>
+                    <tbody data-bind="visible: playlist().length == 0">
+                        <span class="text-muted no-songs" style="padding-top: 10px;">Empty</span>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -75,7 +78,8 @@
     {{#avatars}}
         <img class="avatar img-thumbnail" 
              data-toggle="tooltip" data-placement="bottom" 
-             title="{{username}}" src="{{picture}}" />
+             title="{{username}}" src="{{picture}}"
+             data-id="{{id}}" />
     {{/avatars}}
 </script>
 
@@ -101,10 +105,10 @@
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Input song title or artist"
-                                data-bind="event: {keyup: search}, value: searchString, valueUpdate: 'afterkeydown'"
-                                id="song-search" autofocus />
+                                   data-bind="event: {keyup: searchForSongs}, value: songSearchString, valueUpdate: 'afterkeydown'"
+                                   id="song-search" autofocus />
                             <div class="input-group-btn">
-                                <a href="#" class="btn btn-default" data-bind="click: search">
+                                <a href="#" class="btn btn-default" data-bind="click: searchForSongs">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </a>
                             </div>
@@ -143,11 +147,64 @@
     </div>
 </div>
 
+<div class="modal fade" id="invite-friend-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Invite a friend</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Input friend's name"
+                                   data-bind="event: {keyup: searchForFriends}, value: friendSearchString, valueUpdate: 'afterkeydown'"
+                                   id="friend-search" autofocus />
+                            <div class="input-group-btn">
+                                <a href="#" class="btn btn-default" data-bind="click: searchForFriends">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scroll-area">
+                        <table class="table table-striped search-result table-bordered table-hover table-condensed">
+                            <tbody id="search-content" data-bind="foreach: searchedFriends">
+                                <tr>
+                                    <td>
+                                        <img data-bind="attr: {src: PictureFilePath}" class="img-thumbnail album-cover-sm" />
+                                    </td>
+                                    <td>
+                                        <span data-bind="text: FullName"></span>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-block btn-sm" data-bind="click: $root.inviteFriend">Invite</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody data-bind="visible: searchedFriends().length == 0">
+                                <tr>
+                                    <td>No users found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts
 {
     <script src="~/Scripts/jquery.signalR-2.0.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script src="~/Scripts/mustache.js"></script>
+    <script src="~/Scripts/notify.js"></script>
     <script>
         var roomId = parseInt(@Model.Room.Id);
         var userId = parseInt(@Model.CurrentUser.Id);
@@ -156,5 +213,6 @@
     </script>
     @Scripts.Render("~/bundles/knockout")
     <script src="~/Scripts/mine/song-viewmodel.js"></script>
+    <script src="~/Scripts/mine/user-viewmodel.js"></script>
     <script src="~/Scripts/mine/room-viewmodel.js"></script>
 }

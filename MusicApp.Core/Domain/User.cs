@@ -36,6 +36,7 @@ namespace Data.Domain
         public IList<Song> UploadedSongs { get; set; }
         public IList<User> Friends { get; set; }
         public IList<User> FriendRequests { get; set; }
+        public IList<MailMessage> UnreadMessages { get; set; } 
         public Room HostedRoom { get; set; }
 
         [NotMapped]
@@ -45,6 +46,11 @@ namespace Data.Domain
             {
                 return Email.Substring(0, Email.IndexOf('@'));
             }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Login: {1}", Id, Login);
         }
     }
 }

@@ -33,5 +33,10 @@ namespace Data.Domain
         {
             get { return Id.ToString(); }
         }
+
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, GroupName: {1}, Name: {2}", Id, GroupName, Name);
+        }
     }
 }

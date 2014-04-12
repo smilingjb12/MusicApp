@@ -12,5 +12,7 @@ namespace Business.Services
     {
         MailViewModel GetMailForUser(int userId);
         MailMessage AddMessage(int senderId, int receiverId, string text);
+        IEnumerable<MailMessage> GetUnreadMessagesForUser(int userId);
+        void MarkAllMessagesAsReadForUser(int userId);
     }
 }

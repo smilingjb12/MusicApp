@@ -72,6 +72,7 @@
 
     #actions .btn {
         width: 100px;
+        margin-top: 5px;
     }
 
     #del-room-modal {
@@ -95,8 +96,13 @@
         margin-bottom: 0;
     }
 
-    #add-song-modal {
-        left: -318px;
+    #invite-friend-modal .modal-dialog {
+        margin-top: 100px;
+    }
+
+    #add-song-modal .modal-dialog {
+        margin-left: 84px;
+        margin-top: 70px;
     }
 
     #add-song-modal .modal-content {
@@ -137,3 +143,10 @@
         table.tracklist td:first-child {
             width: 20%;
         }
+
+span.no-songs {
+    display: block;
+    margin: 0 auto;
+    padding-top: 10px;
+    text-align: center;
+}

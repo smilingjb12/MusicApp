@@ -1,4 +1,5 @@
-﻿@using Data.Domain
+﻿@using Data
+@using Data.Domain
 @model MailMessage
 
 <li class="list-group-item">
@@ -26,8 +27,8 @@
             </figure>
         </div>
         <div class="col-xs-10">
-            <span class="text-muted">@Model.Date.ToString("dd.MM.yyyy hh:mm:ss")</span>
-            <p class="message-text short-message">@Html.Truncate(Model.Text, MailMessage.DisplayableTextSize)</p>
+            <span class="text-muted">@Model.Date.TimeAgo()</span>
+            <p class="message-text short-message">@Html.Raw(Model.Text.TruncateTo(MailMessage.DisplayableTextSize))<p>
             <p class="message-text hidden full-message">
                 @Model.Text
             </p>

@@ -24,6 +24,9 @@ namespace DataAccess.Configuration
             this.HasMany(u => u.FriendRequests)
                 .WithMany()
                 .Map(m => m.ToTable("FriendRequests"));
+
+            this.HasMany(u => u.UnreadMessages)
+                .WithOptional();
         }
     }
 }

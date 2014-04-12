@@ -353,8 +353,10 @@
     <Content Include="Scripts\mine\room-viewmodel.js" />
     <Content Include="Scripts\mine\song-uploader.js" />
     <Content Include="Scripts\mine\song-viewmodel.js" />
+    <Content Include="Scripts\mine\user-viewmodel.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\mustache.js" />
+    <Content Include="Scripts\notify.js" />
     <Content Include="Scripts\popcorn.jplayer.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

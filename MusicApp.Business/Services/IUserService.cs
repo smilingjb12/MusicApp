@@ -30,5 +30,6 @@ namespace Business.Services
         void RemoveFromFriends(int userId, int currentUserId);
         IEnumerable<WallMessage> GetWallMessagesForUser(int userId);
         void AddWallMessage(WallMessage wallMessage);
+        IEnumerable<User> SearchUsersExceptCurrent(string term, int currentUserId);
     }
 }

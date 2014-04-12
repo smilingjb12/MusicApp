@@ -29,7 +29,7 @@ var chat = {
         }
         var rendered = Mustache.render(messageTmpl, data);
         $('#chat').append(rendered)
-            .scrollTop($('#chat')[0].scrollHeight);
+                  .scrollTop($('#chat')[0].scrollHeight);
     }
 };
 
@@ -39,9 +39,30 @@ function AppViewModel() {
 
     self.playlist = ko.observableArray([]);
     self.message = ko.observable('');
-    self.searchString = ko.observable('');
+
+    self.friendSearchString = ko.observable('');
+    self.searchedFriends = ko.observableArray([]);
+
+    self.songSearchString = ko.observable('');
     self.searchedSongs = ko.observableArray([]);
+
     window.songs = self.searchedSongs; // TODO: REMOVE THIS
+
+    self.idsOfPeopleIntheRoom = function() {
+        var ids = $('#avatars [data-id]').map(function() {
+            return $(this).attr('data-id');
+        }).map(function() { return parseInt(this); }).get();
+        console.log('ids of people in the room:', ids);
+        return ids;
+    };
+
+    self.notify = function(msg) {
+        $.notify(msg, {
+            position: 'top center',
+            style: 'bootstrap',
+            className: 'success'
+        });
+    };
 
     self.addSongToPlaylist = function(song) {
         console.log('adding song to playlist:', song.Id());
@@ -50,11 +71,25 @@ function AppViewModel() {
         });
     };
 
-    self.search = function() {
-        console.log('searching for', self.searchString());
-        self.searchString(self.searchString().trim());
-        if (self.searchString().length == 0) return true;
-        $.getJSON('/song/search?term=' + self.searchString()).done(function(songs) {
+    self.inviteFriend = function(user) {
+        console.log('inviting', user);
+        var inviteUrl = '/Room/InviteUserToRoom?senderId=' + window.userId +
+            '&receiverId=' + user.Id() +
+            '&roomId=' + window.roomId;
+        console.log('invite url:', inviteUrl);
+        $.get(inviteUrl).done(function(resp) {
+            console.log('response from inviting user:', resp);
+        }).fail(function(e) {
+            console.error(e);
+        });
+        self.notify('Invitation has been sent to ' + user.Login() + '(' + user.FullName() + ')');
+    };
+
+    self.searchForSongs = function() {
+        console.log('searching for', self.songSearchString());
+        self.songSearchString(self.songSearchString().trim());
+        if (self.songSearchString().length == 0) return true;
+        $.getJSON('/song/search?term=' + self.songSearchString()).done(function(songs) {
             console.log('received songs:', songs);
             self.searchedSongs.removeAll();
             ko.utils.arrayForEach(songs, function(song) {
@@ -64,6 +99,24 @@ function AppViewModel() {
             console.error(e);
         });
         return true;
+    };
+
+    self.searchForFriends = function() {
+        console.log('searching for friends, term:', self.friendSearchString());
+        self.friendSearchString(self.friendSearchString().trim());
+        if (self.friendSearchString().length == 0) return true;
+        $.getJSON('/user/SearchUsersExceptCurrent?term=' + self.friendSearchString()).done(function (friends) {
+            console.log('received friends:', friends);
+            self.searchedFriends.removeAll();
+            var peopleInRoomIds = self.idsOfPeopleIntheRoom();
+            ko.utils.arrayForEach(friends, function(friend) {
+                if (!peopleInRoomIds.some(function(id) { return id == friend.Id })) {
+                    self.searchedFriends.push(new UserViewModel(friend));
+                }
+            });
+        }).fail(function(e) {
+            console.error(e);
+        });
     };
     
     self.sendMessage = function() {
@@ -78,13 +131,19 @@ function AppViewModel() {
     self.showAddSongModal = function() {
         $('#add-song-modal').modal({
             backdrop: 'static'
-        })
+        });
+    };
+
+    self.showInviteAFriendModal = function() {
+        console.log('showing invite a friend modal');
+        $('#invite-friend-modal').modal('show');
     };
 
     self.initialize = function() {
         $("#avatars").tooltip({
             selector: '[data-toggle="tooltip"]'
         });
+        console.log('currentUserIdHost:', window.currentUserIsHost);
         if (currentUserIsHost) {
             $(window).on('beforeunload', function() {
                 return 'If you leave this page your room will be destroyed';
