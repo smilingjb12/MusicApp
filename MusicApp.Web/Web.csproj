@@ -350,6 +350,7 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\knockout-mapping.js" />
     <Content Include="Scripts\mine\library.js" />
+    <Content Include="Scripts\mine\playlist-song-viewmodel.js" />
     <Content Include="Scripts\mine\room-viewmodel.js" />
     <Content Include="Scripts\mine\song-uploader.js" />
     <Content Include="Scripts\mine\song-viewmodel.js" />

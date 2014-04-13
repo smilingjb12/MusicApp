@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///M:/@TEMP@/VS2013/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/ReverseEngineeringLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="Code Generation/Text Transformation Log">
+  <MessageClass Name="Message" Label="Message" Option="Show informational messages" />
+  <MessageClass Name="Warning" Label="Warning" Option="Show warnings" />
+  <MessageClass Name="Error" Label="Error" Option="Show errors" />
+  <MessageClass Name="Property" Label="Property" Option="Show metadata" />
+  <MessageClass Name="Diagnostic" Label="Message" Option="Show diagnostic messages" />
+  <Message Timestamp="2014-04-12T22:00:51" Importance="High" Text="Reverse Engineering Started." />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: '5c7c00b5-484a-4198-a4ba-9ddabc350925' -  (ClassifierTemplateParameter)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Boolean' -  (PrimitiveType)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'Integer' -  (PrimitiveType)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data' -  (Package)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain' -  (Package)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage' -  (Class)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage::Date' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage::DisplayableTextSize' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage::Id' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage::IsInboxMessage' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage::MailMessage' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage::Receiver' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage::Sender' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::MailMessage::Text' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::PlaylistSong' -  (Class)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::PlaylistSong::Id' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::PlaylistSong::PlaylistSong' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::PlaylistSong::Room' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::PlaylistSong::Song' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Role' -  (Enumeration)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Role::Admin' -  (EnumerationLiteral)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Role::User' -  (EnumerationLiteral)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room' -  (Class)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::Description' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::GroupName' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::Host' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::Id' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::Name' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::PlaylistSongs' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::Room' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::ToString' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Room::Users' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song' -  (Class)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Album' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::AlbumCoverPicturePath' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Artist' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Bitrate' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Duration' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::FilePath' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::FileSizeInMegaBytes' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Id' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Likes' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Song' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Tags' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Title' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::Uploader' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Song::UploaderId' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Tag' -  (Class)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Tag::Id' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Tag::Name' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::Tag::Tag' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User' -  (Class)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::About' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::ActivationCode' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::City' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::ConnectionId' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::Country' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::Email' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::FriendRequests' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::Friends' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::FullName' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::HostedRoom' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::Id' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::IsActivated' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::Login' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::Password' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::PictureFilePath' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::Role' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::ToString' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::UnreadMessages' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::UploadedSongs' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::User::User' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Medium" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage' -  (Class)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage::Date' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage::Id' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage::Receiver' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage::ReceiverId' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage::Sender' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage::SenderId' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage::Text' -  (Property)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::Data::Domain::WallMessage::WallMessage' -  (Operation)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System' -  (Package)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections' -  (Package)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic' -  (Package)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::IList' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::IList&lt;MailMessage‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::IList&lt;PlaylistSong‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::IList&lt;Song‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::IList&lt;Tag‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Collections::Generic::IList&lt;User‎&gt;' -  (Interface)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::DateTime' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::Double' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'ModelingProject1::System::TimeSpan' -  (Class)   (partially reverse engineered - definition not updated) " />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Element reverse engineered into the UML model: 'String' -  (PrimitiveType)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::MailMessage to ModelingProject1::System::DateTime (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::MailMessage to ModelingProject1::Data::Domain::User (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::MailMessage to ModelingProject1::Data::Domain::User (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::PlaylistSong to ModelingProject1::Data::Domain::Song (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::PlaylistSong to ModelingProject1::Data::Domain::Room (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::Room to ModelingProject1::Data::Domain::User (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::Room to ModelingProject1::System::Collections::Generic::IList&lt;User‎&gt; (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::Room to ModelingProject1::System::Collections::Generic::IList&lt;PlaylistSong‎&gt; (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::Song to ModelingProject1::System::Double (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::Song to ModelingProject1::System::TimeSpan (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::Song to ModelingProject1::Data::Domain::User (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::Song to ModelingProject1::System::Collections::Generic::IList&lt;Tag‎&gt; (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::User to ModelingProject1::Data::Domain::Role (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::User to ModelingProject1::System::Collections::Generic::IList&lt;Song‎&gt; (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::User to ModelingProject1::System::Collections::Generic::IList&lt;User‎&gt; (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::User to ModelingProject1::System::Collections::Generic::IList&lt;User‎&gt; (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::User to ModelingProject1::System::Collections::Generic::IList&lt;MailMessage‎&gt; (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::User to ModelingProject1::Data::Domain::Room (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::WallMessage to ModelingProject1::System::DateTime (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::WallMessage to ModelingProject1::Data::Domain::User (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="Diagnostic" Text="Relationship reverse engineered into the UML model: ModelingProject1::Data::Domain::WallMessage to ModelingProject1::Data::Domain::User (Association)" />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="High" Text="(8) type(s) fully reverse engineered." />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="High" Text="(9) type(s) partially reverse engineered.  These types were not included in the original selection so their full definitions are not reverse engineered.  Instead, this shallow operation has simply ensured these types exist in the UML model because they are needed in order to fully describe other elements." />
+  <Message Timestamp="2014-04-12T22:01:00" Importance="High" Text="The reverse engineering operation completed with (0) error(s), and (0) warning(s)." />
+</Log>

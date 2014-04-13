@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Domain
 {
@@ -14,9 +11,11 @@ namespace Data.Domain
         {
             Users = new List<User>();
             PlaylistSongs = new List<PlaylistSong>();
+            CurrentSongIndex = 0;
         }
 
         public int Id { get; set; }
+        public int CurrentSongIndex { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -26,7 +25,7 @@ namespace Data.Domain
 
         public User Host { get; set; }
         public IList<User> Users { get; set; }
-        public IList<PlaylistSong> PlaylistSongs { get; set; } 
+        public IList<PlaylistSong> PlaylistSongs { get; set; }
     
         [NotMapped]
         public String GroupName

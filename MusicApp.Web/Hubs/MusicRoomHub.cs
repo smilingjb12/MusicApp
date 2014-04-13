@@ -33,7 +33,21 @@ namespace SocialApp.Hubs
             SendUserListForRoom(room);
             SendPlaylistForRoom(room);
         }
-        
+
+        public void SetCurrentSongIndex(int userId, int roomId, int index)
+        {
+            Debug.WriteLine("Setting current song index to {0}", index);
+            Room room = db.Rooms.FirstOrDefault(r => r.Id == roomId);
+            User changer = db.Users.FirstOrDefault(u => u.Id == userId);
+            room.CurrentSongIndex = index;
+            db.SaveChanges();
+            Clients.Group(room.GroupName).onCurrentSongChanged(new
+            {
+                whoChanged = changer.FullName,
+                index
+            });
+        }
+
         public void AddSongToPlaylist(int songId, int roomId)
         {
             Song song = db.Songs.Find(songId);
@@ -89,11 +103,13 @@ namespace SocialApp.Hubs
             using (var db = new SocialAppContext())
             {
                 User user = GetCurrentUser();
-                room = db.Rooms.Include("PlaylistSongs.Song").First(r => r.Id == room.Id);
+                room = db.Rooms.Include("PlaylistSongs.Song")
+                               .First(r => r.Id == room.Id);
                 var playlistData = new 
                 {
                     playlist = room.PlaylistSongs.Select(ps => ps.Song),
-                    username = user.FullName
+                    username = user.FullName,
+                    currentSongIndex = room.CurrentSongIndex
                 };
                 Debug.WriteLine("Sending playlist for room {0}", room);
                 Clients.Group(room.GroupName).onPlaylistReceived(playlistData);

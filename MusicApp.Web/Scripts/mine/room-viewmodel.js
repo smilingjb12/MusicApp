@@ -26,6 +26,8 @@ var chat = {
             $.extend(data, { text: ' left the room', type: 'left' });
         } else if (type == 'song.added') {
             $.extend(data, { text: ' added ' + data.song + ' to playlist', type: 'misc' });
+        } else if (type == 'song.changed') {
+            $.extend(data, { text: data.user + ' changed current song to ' + data.song, type: 'misc' });
         }
         var rendered = Mustache.render(messageTmpl, data);
         $('#chat').append(rendered)
@@ -38,6 +40,7 @@ function AppViewModel() {
     var self = this;
 
     self.playlist = ko.observableArray([]);
+    self.currentSong = ko.observable(new PlaylistSongViewModel({}));
     self.message = ko.observable('');
 
     self.friendSearchString = ko.observable('');
@@ -47,6 +50,21 @@ function AppViewModel() {
     self.searchedSongs = ko.observableArray([]);
 
     window.songs = self.searchedSongs; // TODO: REMOVE THIS
+    window.friends = self.searchedFriends;
+
+    self.setCurrentSong = function (song) {
+        console.log('setting current song at server to be:', song.FullTitleDisplay());
+        hub.server.setCurrentSongIndex(window.userId, window.roomId, song.Index());
+    };
+
+    self.playSong = function (song) {
+        console.log('playing AUDIO of song', song.FullTitleDisplay());
+        ko.utils.arrayForEach(self.playlist(), function (song) {
+            song.IsPlaying(false);
+        });
+        song.IsPlaying(true);
+        self.currentSong(song);
+    }
 
     self.idsOfPeopleIntheRoom = function() {
         var ids = $('#avatars [data-id]').map(function() {
@@ -66,9 +84,10 @@ function AppViewModel() {
 
     self.addSongToPlaylist = function(song) {
         console.log('adding song to playlist:', song.Id());
-        hub.server.addSongToPlaylist(song.Id(), roomId).fail(function(e) {
+        hub.server.addSongToPlaylist(song.Id(), window.roomId).fail(function(e) {
             console.error(e);
         });
+        self.notify(song.Title() + ' + added to playlist');
     };
 
     self.inviteFriend = function(user) {
@@ -82,6 +101,7 @@ function AppViewModel() {
         }).fail(function(e) {
             console.error(e);
         });
+        self.searchedFriends.remove(user);
         self.notify('Invitation has been sent to ' + user.Login() + '(' + user.FullName() + ')');
     };
 
@@ -110,7 +130,7 @@ function AppViewModel() {
             self.searchedFriends.removeAll();
             var peopleInRoomIds = self.idsOfPeopleIntheRoom();
             ko.utils.arrayForEach(friends, function(friend) {
-                if (!peopleInRoomIds.some(function(id) { return id == friend.Id })) {
+                if (!peopleInRoomIds.some(function(id) { return id == friend.Id; })) { // user is not already in this room
                     self.searchedFriends.push(new UserViewModel(friend));
                 }
             });
@@ -122,7 +142,7 @@ function AppViewModel() {
     self.sendMessage = function() {
         if (self.message().length == 0) return;
         console.log('sending', self.message());
-        hub.server.sendMessage(userId, roomId, self.message()).fail(function(e) {
+        hub.server.sendMessage(window.userId, window.roomId, self.message()).fail(function(e) {
             console.error(e);
         });
         self.message('');
@@ -143,8 +163,8 @@ function AppViewModel() {
         $("#avatars").tooltip({
             selector: '[data-toggle="tooltip"]'
         });
-        console.log('currentUserIdHost:', window.currentUserIsHost);
-        if (currentUserIsHost) {
+        console.log('currentUserIsHost:', window.currentUserIsHost);
+        if (window.currentUserIsHost) {
             $(window).on('beforeunload', function() {
                 return 'If you leave this page your room will be destroyed';
             });
@@ -159,7 +179,7 @@ $.connection.hub.start().done(function() {
     ko.applyBindings(app);
     var hub = $.connection.musicRoomHub;
     
-    hub.server.joinRoom(userId, roomId).fail(function(e) {
+    hub.server.joinRoom(window.userId, window.roomId).fail(function(e) {
         console.error(e);
     });
 });
@@ -186,13 +206,31 @@ $.extend($.connection.musicRoomHub.client, {
         $('#avatars').html(rendered);
     },
 
+    onPlaylistReceived: function(data) {
+        console.log('received playlist:', data.playlist,
+            'currentSongIndex:', data.currentSongIndex);
+        app.playlist.removeAll();
+        var i = 0;
+        ko.utils.arrayForEach(data.playlist, function (song) {
+            var vm = new PlaylistSongViewModel(song);
+            vm.Index(i);
+            i++;
+            app.playlist.push(vm);
+        });
+        // TODO: play song from current time
+        if (app.playlist().length > 0) {
+            app.playSong(app.playlist()[data.currentSongIndex]);
+        }        
+    },
+
     onRoomDestroyed: function() {
-        window.location = '/room/destroyed/' + roomId;
+        window.location = '/room/destroyed/' + window.roomId;
     },
     
     onSongAddedToPlaylist: function(whoAdded, song) {
         console.log('onSongAddedToPlaylist(), song:', song, ', who added:', whoAdded);
-        var songViewModel = new SongViewModel(song);
+        var songViewModel = new PlaylistSongViewModel(song);
+        songViewModel.Index(app.playlist().length);
         window.song = song;
         window.vm = songViewModel;
         console.log('songViewModel:', songViewModel);
@@ -200,11 +238,14 @@ $.extend($.connection.musicRoomHub.client, {
         chat.addMessage({ type: 'song.added', data: { username: whoAdded, song: songViewModel.FullTitleDisplay() } });
     },
 
-    onPlaylistReceived: function(data) {
-        console.log('received playlist:', data.playlist);
-        app.playlist.removeAll();
-        ko.utils.arrayForEach(data.playlist, function(song) {
-            app.playlist.push(new SongViewModel(song));
+    onCurrentSongChanged: function(data) {
+        console.log('onCurrentSongChanged: whoChanged:', data.whoChanged, ', index:', data.index);
+        var currentSongViewModel = app.playlist()[data.index];
+        console.log('current song:', currentSongViewModel);
+        app.playSong(currentSongViewModel);
+        chat.addMessage({
+            type: 'song.changed',
+            data: { user: data.whoChanged, song: currentSongViewModel.TitleDisplay() }
         });
     }
 });

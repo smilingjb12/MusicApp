@@ -8,7 +8,7 @@ using Data.Domain;
 
 namespace DataAccess.Configuration
 {
-    public class PlaylistSongConfiguration : EntityTypeConfiguration<PlaylistSong>
+    class PlaylistSongConfiguration : EntityTypeConfiguration<PlaylistSong>
     {
         public PlaylistSongConfiguration()
         {

@@ -31,6 +31,11 @@ namespace Data.Domain
         [Required]
         public TimeSpan Duration { get; set; }
 
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Title: {1}, Artist: {2}", Id, Title, Artist);
+        }
+
         public int UploaderId { get; set; }
         public User Uploader { get; set; }
 

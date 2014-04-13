@@ -67,7 +67,7 @@
     }
 
     #player-panel #album-cover {
-        width: 160px;
+        max-width: 260px;
     }
 
     #actions .btn {
@@ -118,7 +118,7 @@
             overflow-y: scroll;
         }
 
-    .modal-backdrop {
+    #add-song-modal .modal-backdrop {
         opacity: 0 !important;
     }
 
