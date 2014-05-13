@@ -42,6 +42,16 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Content/bootstrap/js")
+    <script src="~/Scripts/notify.js"></script>
+    <script>
+        window.notify = function (msg) {
+            $.notify(msg, {
+                position: 'top center',
+                style: 'bootstrap',
+                className: 'success'
+            });
+        };
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

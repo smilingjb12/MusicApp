@@ -4,6 +4,7 @@
     self.song = ko.observable(new SongViewModel({}));
     self.songs = ko.observableArray([]);
     self.filter = ko.observable('');
+    var audio = new Audio();
 
     window.songs = self.songs; // TODO: REMOVE
     window.song = self.song; // TODO: REMOVE
@@ -17,6 +18,25 @@
             return song.FullTitle().match(search);
         });
     });
+
+    self.playSong = function (song) {
+        console.log('playing song:', song);
+        ko.utils.arrayForEach(self.songs(), function(s) {
+            s.IsPlaying(false);
+        });
+        console.log('song filepath:', song.FilePath());
+        audio.src = song.FilePath();
+        audio.play();
+        song.IsPlaying(true);
+        window.notify('Now playing: ' + song.FullTitleDisplay());
+        console.log('song.IsPlaying():', song.IsPlaying());
+    };
+
+    self.pauseSong = function(song) {
+        console.log('stopping song:', song);
+        audio.pause();
+        song.IsPlaying(false);
+    };
 
     self.resetUploadState = function() {
         $('#upload-modal').html($('#browse-song-template').html());

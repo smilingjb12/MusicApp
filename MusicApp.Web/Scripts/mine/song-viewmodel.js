@@ -14,6 +14,8 @@
     self.Bitrate = ko.observable(json.Bitrate);
     self.FilePath = ko.observable(json.FilePath);
 
+    self.IsPlaying = ko.observable(false);
+
     self.ArtistDisplay = ko.computed(function() {
         return self.Artist() == null || self.Artist() == '' ? 'Unknown' : self.Artist();
     });

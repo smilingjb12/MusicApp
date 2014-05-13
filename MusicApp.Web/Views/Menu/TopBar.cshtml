@@ -4,6 +4,11 @@
 {
     <ul class="nav navbar-nav navbar-right">
         <li>
+            <a href="#">
+                <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+            </a>
+        </li>
+        <li>
             <a href="@Url.Action("Friends", "User")">
                 <span class="glyphicon glyphicon-user"></span>&nbsp;Friends
                 @if (Model.FriendRequests.Any())

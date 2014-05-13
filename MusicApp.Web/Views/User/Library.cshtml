@@ -106,9 +106,16 @@
             <li class="list-group-item song">
                 <div class="row">
                     <div class="col-xs-1 play-btn">
-                        <a href="#" class="btn btn-default btn-xs">
-                            <span class="glyphicon glyphicon-play"></span>
-                        </a>
+                        <div data-bind="visible: IsPlaying">
+                            <a href="#" class="btn btn-default btn-xs" data-bind="click: $root.pauseSong">
+                                <span class="glyphicon glyphicon-pause"></span>
+                            </a>
+                        </div>
+                        <div data-bind="visible: !IsPlaying()">
+                            <a href="#" class="btn btn-default btn-xs" data-bind="click: $root.playSong">
+                                <span class="glyphicon glyphicon-play"></span>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-xs-8">
                         <section class="main-info">

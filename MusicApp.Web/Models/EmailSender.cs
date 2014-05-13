@@ -17,7 +17,7 @@ namespace SocialApp.Models
             SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
             mail.From = new MailAddress(Server);
             mail.To.Add(email);
-            mail.Subject = "Activation code for Lorem Ipsum site";
+            mail.Subject = "Activation code for Collaborative music app";
             string activationLink = string.Format("{0}://{1}/Account/Activate?code={2}",
                 HttpContext.Current.Request.Url.Scheme, HttpContext.Current.Request.Url.Authority, activationCode);
             mail.Body = string.Format("Follow this link to activate your account: {0}", activationLink);

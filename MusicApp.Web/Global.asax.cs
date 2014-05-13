@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Data;
 using Data.Domain;
 using DataAccess;
 using Newtonsoft.Json;
@@ -23,13 +24,12 @@ namespace SocialApp
             {
                 bool hasFakeUsers = db.Users.FirstOrDefault(u => u.Email == "test@test.test") != null;
                 if (hasFakeUsers) return;
-                var users = new List<User>
+                var users = new List<User>();
+                var names = new[] {"Jill John Jack Jane Jim Kate Bill"};
+                for (int i = 0; i < 20; i++)
                 {
-                    new User() { Email = "test@test.test", Password = "test", FullName = "John Doe" },
-                    new User() { Email = "test2@test.test", Password = "test", FullName = "Jill Jason" },
-                    new User() { Email = "test3@test.test", Password = "test", FullName = "Bill Hill" },
-                    new User() { Email = "test4@test.test", Password = "test", FullName = "Mary Jane" }
-                };
+                    users.Add(new User() { Email = "test" + i + "@test.test", Password = "test", FullName = names.Sample()});
+                }
                 foreach (var user in users)
                 {
                     WebSecurity.CreateUserAndAccount(user.Email, user.Password, propertyValues: new
