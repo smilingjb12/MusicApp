@@ -38,6 +38,7 @@
                     <source id="mp3-source" type="audio/mpeg">
                     Your browser does not support the audio element
                 </audio>
+                <div class="overlay"></div>
             </div>
         </div>
         <div class="panel panel-default" id="actions">
@@ -45,6 +46,10 @@
             <div class="panel-body">
                 <a href="#" class="btn btn-primary btn-sm" data-bind="click: showAddSongModal">Add a song</a>
                 <a href="#" class="btn btn-success btn-sm" data-bind="click: showInviteAFriendModal">Invite a friend</a>
+                <button class="btn btn-primary btn-sm"
+                   data-bind="click: voteSkipSong, enable: canVoteSkip">
+                    Vote skip&nbsp;(<span data-bind="text: skipVotes"></span>)
+                </button>
             </div>
         </div>
     </div>
@@ -54,7 +59,7 @@
             <div class="panel-body">
                 <table class="table table-bordered table-condensed tracklist">
                     <tbody data-bind="foreach: playlist">
-                        <tr>
+                        <tr data-bind="css: {playing: IsPlaying}">
                             <td>
                                 <img data-bind="attr: {src: AlbumCoverPicturePath}" class="img-thumbnail album-cover-sm" />
                             </td>
@@ -62,14 +67,6 @@
                                 <span data-bind="text: TitleDisplay"></span>
                                 <br />
                                 <span data-bind="text: ArtistDisplay" class="text-muted"></span>
-                            </td>
-                            <td>
-                                <a href="#" class="btn btn-primary btn-xs" data-bind="click: $root.setCurrentSong">
-                                    <span data-bind="visible: !IsPlaying()"
-                                          class="glyphicon glyphicon-play"></span>
-                                    <span data-bind="visible: IsPlaying"
-                                          class="glyphicon glyphicon-pause"></span>
-                                </a>
                             </td>
                         </tr>
                     </tbody>

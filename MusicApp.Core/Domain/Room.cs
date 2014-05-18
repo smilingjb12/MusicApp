@@ -16,6 +16,8 @@ namespace Data.Domain
 
         public int Id { get; set; }
         public int CurrentSongIndex { get; set; }
+        public double CurrentSongTime { get; set; }
+        public int SkipVotes { get; set; }
 
         [Required]
         public string Name { get; set; }

@@ -9,6 +9,7 @@
     self.Duration = ko.observable(json.Duration);
     self.Index = ko.observable(json.Index);
     self.Bitrate = ko.observable(json.Bitrate);
+    self.FilePath = ko.observable(json.FilePath);
 
     self.IsPlaying = ko.observable(false);
 

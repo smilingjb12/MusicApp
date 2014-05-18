@@ -25,6 +25,12 @@ namespace SocialApp.Controllers
             this.mailService = mailService;
         }
 
+        public JsonResult CurrentSongTime(int roomId)
+        {
+            var room = roomService.FindById(roomId);
+            return Json(room.CurrentSongTime, JsonRequestBehavior.AllowGet);
+        }
+
         public ViewResult List()
         {
             var rooms = roomService.GetAllRoomsWithHosts();

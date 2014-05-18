@@ -22,10 +22,10 @@ namespace SocialApp
         {
             using (var db = new SocialAppContext())
             {
-                bool hasFakeUsers = db.Users.FirstOrDefault(u => u.Email == "test@test.test") != null;
+                bool hasFakeUsers = db.Users.FirstOrDefault(u => u.Email == "test1@test.test") != null;
                 if (hasFakeUsers) return;
                 var users = new List<User>();
-                var names = new[] {"Jill John Jack Jane Jim Kate Bill"};
+                var names = new[] {"Jill","John","Jack","Jane","Jim","Kate","Bill"};
                 for (int i = 0; i < 20; i++)
                 {
                     users.Add(new User() { Email = "test" + i + "@test.test", Password = "test", FullName = names.Sample()});

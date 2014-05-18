@@ -1,4 +1,21 @@
-﻿input.message-input {
+﻿.overlay {
+    width: 130px;
+    height: 20px;
+    position: relative;
+    top: -25px;
+    left: 10px;
+    opacity: 0;
+}
+
+.playing {
+    background-color: #d9edf7;
+}
+
+.panel-body {
+    background: #fcfcfc;
+}
+
+input.message-input {
         outline: none;
         box-shadow: none !important;
         border: 1px solid #ddd !important;
@@ -7,7 +24,7 @@
     ul#chat {
         overflow-y: scroll;
         height: 250px;
-        background-color: #fff;
+        background-color: #fcfcfc;
         border: solid 1px #ddd;
         border-radius: 4px;
     }
@@ -52,6 +69,7 @@
 
     #avatars {
         padding: 0;
+        background: #fcfcfc;
     }
 
     .room-title {
@@ -62,7 +80,6 @@
     }
 
     #player-panel #player {
-        margin-top: 15px;
         width: 260px;
     }
 
@@ -134,6 +151,10 @@
         height: 235px;
         overflow-y: scroll;
         padding: 1px;
+    }
+
+    table.tracklist {
+        background: #fcfcfc;
     }
 
     table.tracklist td {
