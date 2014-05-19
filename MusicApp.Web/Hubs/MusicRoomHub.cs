@@ -18,7 +18,7 @@ namespace SocialApp.Hubs
     {
         private readonly SocialAppContext db = new SocialAppContext(); // DI doesn't work :(
 
-        public async void JoinRoom(int userId, int roomId)
+        public async Task JoinRoom(int userId, int roomId)
         {
             User user = db.Users.Find(userId);
             user.ConnectionId = Context.ConnectionId;
